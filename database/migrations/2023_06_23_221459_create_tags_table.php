@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_profiles', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->longText('bio')->nullable();
-            $table->unsignedBigInteger('page_visits_count')->default(0)->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('name');
+            $table->string('slug');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_profiles');
+        Schema::dropIfExists('tags');
     }
 };
