@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -50,22 +53,22 @@ class User extends Authenticatable
     ];
 
     // Relationship to user profile
-    public function userProfile(){
+    public function userProfile(): HasOne{
         return $this->hasOne(UserProfile::class);
     }
 
     // Relationship to posts
-    public function posts(){
+    public function posts() : HasMany{
         return $this->hasMany(Post::class);
     }
 
     // Relationship to comments
-    public function comments(){
+    public function comments() : HasMany{
         return $this->hasMany(Comment::class);
     }
 
     // Relationship to roles
-    public function roles(){
+    public function roles() : BelongsToMany{
         return $this->belongsToMany(Role::class)
             ->withTimestamps();
     }
