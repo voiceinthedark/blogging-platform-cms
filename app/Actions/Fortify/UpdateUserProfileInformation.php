@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -17,6 +18,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update(User $user, array $input): void
     {
+        $userProfile = $user->userProfile;
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
@@ -24,7 +27,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
-            $user->updateProfilePhoto($input['photo']);
+            $userProfile->updateProfilePhoto($input['photo']);
         }
 
         if ($input['email'] !== $user->email &&

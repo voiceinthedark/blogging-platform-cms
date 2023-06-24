@@ -26,9 +26,11 @@
 
                 <x-label for="photo" value="{{ __('Photo') }}" />
 
+                {{-- {{dd($this->user->userProfile->profile_photo_url)}} --}}
+
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
+                    <img src="{{ url($this->user->userProfile->profile_photo_url) }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
                 </div>
 
                 <!-- New Profile Photo Preview -->
@@ -42,7 +44,7 @@
                     {{ __('Select A New Photo') }}
                 </x-secondary-button>
 
-                @if ($this->user->profile_photo_path)
+                @if ($this->user->userProfile->profile_photo_url)
                     <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
                         {{ __('Remove Photo') }}
                     </x-secondary-button>
