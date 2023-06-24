@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('post_id')->constrained('posts');
             $table->foreignId('user_id')->constrained('users');
-            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('comments');
             $table->text('content');
             $table->boolean('is_approved')->default(true);
+            $table->tinyInteger('level')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
