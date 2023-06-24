@@ -16,12 +16,14 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('title');
             $table->text('content');
+            $table->string('excerpt')->nullable();
             $table->string('slug');
             $table->unsignedBigInteger('views')->default(0)->nullable();
             $table->unsignedBigInteger('dislikes')->default(0)->nullable();
             $table->unsignedBigInteger('likes')->default(0)->nullable();
             $table->timestamps();
             $table->dateTime('published_at')->nullable();
+            $table->softDeletes()->nullable();
         });
     }
 
