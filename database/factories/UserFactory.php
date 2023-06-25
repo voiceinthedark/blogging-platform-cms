@@ -4,7 +4,9 @@ namespace Database\Factories;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 
@@ -67,5 +69,15 @@ class UserFactory extends Factory
                 ->when(is_callable($callback), $callback),
             'ownedTeams'
         );
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (User $user) {
+           // Delete all the users in the users table that have no profiles in userprofiles table
+        //    $userprofiles = UserProfile::all();
+        //    DB::table('users')->where('id', '!=', $user->id)->delete();
+
+        });
     }
 }

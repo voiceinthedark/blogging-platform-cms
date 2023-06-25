@@ -3,6 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\Role;
+use App\Models\Tag;
+use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +26,34 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // Run the RoleSeeder
+        // Run the seeders
         $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(TagSeeder::class);
+        $this->call(CategorySeeder::class);
+        // $this->call(UserProfileSeeder::class);
+
+        // Run the user factory
+        User::factory(100)->create()->each(
+            function ($user) {
+                UserProfile::factory()->create([
+                    'user_id' => $user->id
+                ]);
+                // echo 'User ' . $user->id . ' created' . PHP_EOL;
+
+                //user roles
+                $user->roles()->attach(Role::where('name', 'user')->first());
+                Post::factory(rand(1, 5))->create([
+                    'user_id' => $user->id
+                ])->each(function ($post) use ($user) {
+                    $tags = Tag::all();
+                    $categories = Category::all();
+                    $post->tags()->attach($tags->random(rand(1, 3)));
+                    $post->categories()->attach($categories->random(rand(1, 3)));
+                });
+            }
+        );
+
+
     }
 }
