@@ -41,7 +41,6 @@ class DatabaseSeeder extends Seeder
                 ]);
                 // echo 'User ' . $user->id . ' created' . PHP_EOL;
 
-                //user roles
                 $user->roles()->attach(Role::where('name', 'user')->first());
                 Post::factory(rand(1, 5))->create([
                     'user_id' => $user->id
