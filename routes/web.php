@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Http\Livewire\ShowPosts;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
@@ -14,11 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome', [
-        'posts' => Post::all(),
-    ]);
-});
+Route::get('/', [PostController::class, 'index']);
+
 
 Route::middleware([
     'auth:sanctum',

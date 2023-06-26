@@ -1,35 +1,23 @@
-{{-- <div class="flex flex-col font-sans my-2 w-[600px] bg-gray-200 rounded py-2 px-4" wire:model="post">
+<div class="flex flex-col justify-center min-w-[1200px] py-8 px-4 mx-auto w-9/12 max-w-screen-xl lg:py-16">
+    <div class="bg-gray-50  border border-gray-200  rounded-lg p-8 md:p-12 mb-8">
 
-    <h2 class="text-2xl">{{ $post->title }}</h2>
-    <p class="mt-2">
-        {{ $post->excerpt }}
-    </p>
-    <div class="flex justify-between">
-        <span>{{ $post->created_at->diffForHumans() }}</span>
-        <span>{{ $post->user->name }}</span>
-    </div>
-
-</div> --}}
-
-
-<section>
-    <div class="flex flex-col justify-center min-w-[1200px] py-8 px-4 mx-auto w-9/12 max-w-screen-xl lg:py-16">
-        <div class="bg-gray-50  border border-gray-200  rounded-lg p-8 md:p-12 mb-8">
-
-            <div class="flex flex-row">
-                @foreach ($post->tags as $tag)
-                    <a href="#"
-                        class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md  mb-2 mx-2">
-                        <x-icons.category :name="$tag->slug" class="w-6 h-6 mx-2"/>
-                        {{ $tag->name }}
-
-                    </a>
-                @endforeach
-            </div>
-            <h1 class="text-gray-900  text-3xl md:text-5xl font-extrabold mb-2">{{ $post->title }}</h1>
-            <p class="text-lg font-normal text-gray-500 mb-6">
-                {{ $post->excerpt }}
-            </p>
+        <!-- Tags list -->
+        <div class="flex flex-row">
+            @foreach ($post->tags as $tag)
+                <a href="#"
+                    class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md  mb-2 mx-2">
+                    <x-icons.tag :name="$tag->slug" class="w-6 h-6 mx-2" />
+                    {{ $tag->slug }}
+                </a>
+            @endforeach
+        </div>
+        <!-- Post title -->
+        <h1 class="text-gray-900  text-3xl md:text-5xl font-extrabold mb-2">{{ $post->title }}</h1>
+        <!-- Post excerpt -->
+        <p class="text-lg font-normal text-gray-500 mb-6">
+            {{ $post->excerpt }}
+        </p>
+        <div class="flex flex-row justify-between">
             <a href="#"
                 class="inline-flex justify-center items-center py-2.5 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 ">
                 Read more
@@ -40,6 +28,11 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </a>
+            <!-- Author -->
+            <div class="flex flex-col">
+                <a href="#" class="text-indigo-500"><span>{{ $post->user->name }}</span></a>
+                <span class="text-gray-500">{{ $post->created_at->diffForHumans() }}</span>
+            </div>
         </div>
     </div>
-</section>
+</div>

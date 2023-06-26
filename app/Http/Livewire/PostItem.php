@@ -4,13 +4,14 @@ namespace App\Http\Livewire;
 
 use App\Models\Post;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class PostItem extends Component
 {
-    public Post $post;
-    public function mount(Post $post)
+    public $post;
+    public function mount()
     {
-        $this->post = $post;
+        // $this->post = Post::find($postId);
 
     }
     public function render()
