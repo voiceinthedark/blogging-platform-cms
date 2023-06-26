@@ -56,7 +56,7 @@
     </header>
 
     <div>
-        <livewire:show-posts posts="{{ $posts }}" />
+        <livewire:show-posts :posts="$posts" />
     </div>
 
 

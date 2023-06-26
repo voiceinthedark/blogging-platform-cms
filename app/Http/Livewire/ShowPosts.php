@@ -17,14 +17,10 @@ class ShowPosts extends Component
         $this->posts = Post::orderBy('created_at', 'desc')->paginate(10);
     }
 
-    public function showUserPosts(){
-        $this->posts = Post::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(10);
-    }
-
     public function render()
     {
         return view('livewire.show-posts', [
-            'posts' => $this->posts,
+            'posts' => Post::orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 }
