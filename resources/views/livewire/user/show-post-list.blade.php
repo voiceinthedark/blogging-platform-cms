@@ -32,7 +32,7 @@
                         clip-rule="evenodd"></path>
                 </svg>
             </div>
-            <input type="text" id="search-posts"
+            <input type="text" id="search-posts" wire:model="search"
                 class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search for posts">
         </div>
@@ -87,10 +87,14 @@
                     <td class="px-6 py-4">
                         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
                             Post</a>
-                        <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete Post</a>
+                        <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline"
+                        wire:click.prevent="deletePost({{ $post->id }})">
+                        Delete Post</a>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    <!-- Delete User Confirmation Modal -->
+
 </div>
