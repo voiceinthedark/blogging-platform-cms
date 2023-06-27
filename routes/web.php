@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Livewire\ShowPosts;
+use App\Http\Livewire\User\CreatePost;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,6 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
+    Route::get('/posts', [PostController::class, 'create'])->name('posts.create');
+    // Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 });

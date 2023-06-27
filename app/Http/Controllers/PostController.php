@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
 
@@ -24,7 +25,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create', [
+            'tags' => Tag::all(),
+        ]);
     }
 
     /**
@@ -32,7 +35,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
