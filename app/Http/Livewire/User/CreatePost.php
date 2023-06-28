@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\User;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Validator;
@@ -20,12 +21,16 @@ class CreatePost extends Component
     public $content;
     public $tags;
     public $tagSearch;
+    public $categories;
+    public $categorySearch;
 
     public function mount(){
         $this->title = '';
         $this->content = '';
         $this->tags = Tag::all();
         $this->tagSearch = '';
+        $this->categories = Category::all();
+        $this->categorySearch = '';
     }
 
     public function updated($propertyName){
@@ -39,6 +44,10 @@ class CreatePost extends Component
 
     public function updatedTagSearch(){
         $this->tags = Tag::where('name', 'LIKE', '%' . $this->tagSearch . '%')->get();
+    }
+
+    public function updatedCategorySearch(){
+        $this->categories = Category::where('name', 'LIKE', '%' . $this->categorySearch . '%')->get();
     }
 
     public function create(){
