@@ -15,6 +15,8 @@ class CreatePost extends Component
     protected $rules = [
         'title' => ['required', 'max:255', 'string'],
         'content' => ['required', 'string'],
+        'tagCollection' => ['array'],
+        'categoryCollection' => ['array'],
     ];
 
     public $title;
@@ -23,6 +25,8 @@ class CreatePost extends Component
     public $tagSearch;
     public $categories;
     public $categorySearch;
+    public $tagCollection;
+    public $categoryCollection;
 
     public function mount(){
         $this->title = '';
