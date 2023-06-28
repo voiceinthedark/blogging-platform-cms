@@ -1,4 +1,5 @@
 <div class="flex flex-col items-center">
+    <x-banner />
     <div class="w-8/12 flex flex-col">
         <x-label for="title" value="Title" />
         <x-input id="title" type="text" wire:model="title" />
@@ -35,8 +36,9 @@
         <!-- Dropdown menu -->
         <div id="dropdownTagSearch"
             class="absolute left-0 bottom-14 mt-2 w-56 rounded-md shadow-lg"
-         x-show="open"
-         x-on:click.outside="close()">
+            style="display: none;"
+            x-show="open"
+            x-on:click.outside="close()">
             <div class="p-3">
                 <label for="input-group-search" class="sr-only">Search</label>
                 <div class="relative">

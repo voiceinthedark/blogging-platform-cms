@@ -30,6 +30,6 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
-    Route::get('/posts', [PostController::class, 'create'])->name('posts.create');
-    // Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/dashboard', [PostController::class, 'index']);
 });

@@ -17,12 +17,13 @@
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
                     <li>
                         <a href="{{ route('posts.create') }}"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Create New Post</a>
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Create
+                            New Post</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <label for="table-search" class="sr-only">Search</label>
+        <label for="search-posts" class="sr-only">Search</label>
         <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
@@ -36,6 +37,7 @@
                 class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search for posts">
         </div>
+
     </div>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -56,46 +58,16 @@
         </thead>
         <tbody>
             <!-- Get User's Posts -->
-            @foreach ($posts as $post)
-                <tr
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <div>
 
-                    <th scope="row"
-                        class="flex max-w-md items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                        <div class="pl-3">
-                            <div class="text-base font-semibold">{{ $post->title }}</div>
-                            <div class="font-normal text-gray-500">
-                                @foreach ($post->tags as $tag)
-                                    <a href="#"
-                                        class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md  mb-2 mx-2">
-                                        <x-icons.tag :name="$tag->slug" class="w-6 h-6 mx-2" />
-                                        {{ $tag->slug }}
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    </th>
-                    <td class="px-6 py-4 w-3/12">
-                        {{ $post->excerpt }}
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
-                            {{ $post->created_at->diffForHumans() ?? 'Unpublished' }}
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                            Post</a>
-                        <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline"
-                        wire:click.prevent="deletePost({{ $post->id }})">
-                        Delete Post</a>
-                    </td>
-                </tr>
-            @endforeach
-            {{ $posts->links() }}
+                @foreach ($posts as $post)
+                    <livewire:user.show-post :post="$post" wire:key="{{ $post->id }}" />
+                @endforeach
+                {{ $posts->links() }}
+            </div>
+
+
         </tbody>
     </table>
     <!-- Delete User Confirmation Modal -->
-
 </div>

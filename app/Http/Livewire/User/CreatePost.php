@@ -43,13 +43,6 @@ class CreatePost extends Component
 
     public function create(){
 
-        // Validator::make(
-        //     [
-        //         'title' => ['required', 'max:255', 'string'],
-        //         'content' => ['required', 'string'],
-        //     ]
-        //     )->validate();
-
         $this->validate();
 
         $post = Post::create([
@@ -59,8 +52,6 @@ class CreatePost extends Component
             'excerpt' => Str::excerpt($this->content),
             'slug' => Str::slug($this->title),
         ]);
-
-        // dd($post);
 
         $this->reset();
         $this->emit('createPost');

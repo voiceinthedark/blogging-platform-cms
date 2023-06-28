@@ -8,9 +8,15 @@ use Livewire\WithPagination;
 
 class ShowPostList extends Component
 {
-    use WithPagination;
+    // TODO: Figure out why withPagination is not working
+    // use WithPagination;
 
-    protected $posts;
+    // Add listeners
+    protected $listeners = [
+        'postDeleted' => 'updatedPosts',
+    ];
+
+    private $posts;
     public $search;
 
     public function mount(){
@@ -18,15 +24,19 @@ class ShowPostList extends Component
         $this->posts = Post::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(5);
     }
 
+
+
     // Add search functionality
     public function updatedSearch(){
         $this->posts = Post::where('user_id', auth()->user()->id)->where('title', 'LIKE', '%' . $this->search . '%')->orderBy('created_at', 'desc')->paginate(5);
     }
 
-
-    public function deletePost($id){
-        Post::find($id)->delete();
+    public function updatedPosts(){
+        $this->posts = Post::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(5);
     }
+
+
+
     public function render()
     {
         return view('livewire.user.show-post-list', [
