@@ -12,6 +12,11 @@ use Illuminate\Support\Str;
 class CreatePost extends Component
 {
 
+    protected $listeners = [
+        'editorjs-save:editorjs-create-post' => 'saveEditorState'
+    ];
+
+
     protected $rules = [
         'title' => ['required', 'max:255', 'string'],
         'content' => ['required', 'string'],
@@ -28,7 +33,8 @@ class CreatePost extends Component
     public $tagCollection;
     public $categoryCollection;
 
-    public function mount(){
+    public function mount()
+    {
         $this->title = '';
         $this->content = '';
         $this->tags = Tag::all();
@@ -37,26 +43,38 @@ class CreatePost extends Component
         $this->categorySearch = '';
     }
 
-    public function updated($propertyName){
+    public function updated($propertyName)
+    {
         $this->validateOnly($propertyName);
     }
 
-    public function resetFields(){
+    public function resetFields()
+    {
         $this->title = '';
         $this->content = '';
     }
 
-    public function updatedTagSearch(){
+    public function updatedTagSearch()
+    {
         $this->tags = Tag::where('name', 'LIKE', '%' . $this->tagSearch . '%')->get();
     }
 
-    public function updatedCategorySearch(){
+    public function updatedCategorySearch()
+    {
         $this->categories = Category::where('name', 'LIKE', '%' . $this->categorySearch . '%')->get();
     }
 
-    public function create(){
+    public function saveEditorState($editorJsonData)
+    {
+        $this->content = $editorJsonData;
+    }
+
+    public function create()
+    {
 
         $this->validate();
+
+        // dd($this->categoryCollection, $this->tagCollection);
 
         $post = Post::create([
             'user_id' => auth()->user()->id,
@@ -66,6 +84,11 @@ class CreatePost extends Component
             'slug' => Str::slug($this->title),
         ]);
 
+
+        $post->tags()->attach($this->tagCollection);
+        $post->categories()->attach($this->categoryCollection);
+
+
         $this->reset();
         $this->emit('createPost');
 
@@ -73,12 +96,10 @@ class CreatePost extends Component
         session()->flash('flash.bannerStyle', 'success');
 
         return redirect('/dashboard');
-
     }
 
     public function render()
     {
         return view('livewire.user.create-post');
-
     }
 }

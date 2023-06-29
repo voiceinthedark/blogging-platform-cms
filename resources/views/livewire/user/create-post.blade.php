@@ -2,8 +2,14 @@
  $watch('tags', () => {
      console.log(tags.toString());
      console.log($wire.tagCollection)
-     $wire.set('tagCollection', tags);
- })">
+     $wire.set('tagCollection', tagsId);
+ });
+ /* Watch the categories array if it changes console it */
+ $watch('categories', () => {
+     console.log(categories.toString());
+     console.log($wire.categoryCollection);
+     $wire.set('categoryCollection', categoriesId);
+ });">
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('dataHandler', () => {
@@ -11,7 +17,9 @@
                     openTag: false,
                     openCategory: false,
                     tags: [],
+                    tagsId: [],
                     categories: [],
+                    categoriesId: [],
                     toggle(type) {
                         switch (type) {
                             case 'tag':
@@ -40,6 +48,13 @@
                             this.categories.splice(this.categories.indexOf(tag), 1) : this.categories.push(
                                 tag);
                     },
+                    toggleCollectionId(tag, callingAction) {
+                        // if tag is not in the array, add it else remove it
+                        callingAction == 'tag' ? this.tagsId.includes(tag) ? this.tagsId.splice(this.tagsId
+                                .indexOf(tag), 1) : this.tagsId.push(tag) : this.categoriesId.includes(
+                            tag) ? this.categoriesId.splice(this.categoriesId.indexOf(tag), 1) : this
+                            .categoriesId.push(tag);
+                    },
                 }
             })
         })
@@ -53,10 +68,10 @@
             <x-input id="title" type="text" wire:model="title" />
             <x-input-error for="title" />
         </div>
-        <div class="w-8/12 flex flex-col">
+        <div class="w-8/12 flex flex-col" wire:ignore>
             <x-label for="content" value="Content" />
             <x-textarea class="min-h-[400px]" id="content" wire:model="content"> </x-textarea>
-            <x-input-error for="content" />
+            <x-input-error for="editorjs-create-post" />
         </div>
 
 
@@ -64,7 +79,7 @@
             <div class="flex flex-row justify-evenly gap-2">
                 <!-- Tags Dropdown Menu -->
                 <div class="w-8/12 mt-2 flex flex-col justify-between relative"
-                    x-on:keydown.escape.prevent.stop="close('tag')">
+                    x-on:keydown.escape.prevent.stop="close('tag')" wire:ignore>
                     <button id="dropdownTagSearchButton" x-on:click="toggle('tag')"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         type="button">Tag search <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none"
@@ -99,7 +114,8 @@
                                     <div
                                         class="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                                         <input id="tag-{{ $tag->id }}" type="checkbox" value="{{ $tag->slug }}"
-                                            x-on:click="toggleCollection('{{ $tag->slug }}', 'tag')"
+                                            x-on:click="toggleCollection('{{ $tag->slug }}', 'tag');
+                                            toggleCollectionId('{{ $tag->id }}', 'tag')"
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label for="tag-{{ $tag->id }}"
                                             class="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
@@ -117,7 +133,7 @@
 
                 <!-- Category Dropdown Menu -->
                 <div class="w-8/12 mt-2 flex justify-between relative"
-                    x-on:keydown.escape.prevent.stop="close('category')">
+                    x-on:keydown.escape.prevent.stop="close('category')" wire:ignore>
                     <button id="dropdownCategorySearchButton" x-on:click="toggle('category')"
                         class="w-44 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         type="button">Category search <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none"
@@ -134,9 +150,8 @@
                                 <div class="absolute inset-y-4 left-0 flex items-center pl-3 pointer-events-none">
                                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                            clip-rule="evenodd"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"></path>
+                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                                     </svg>
                                 </div>
                                 <input type="text" id="input-category-search"
@@ -153,7 +168,8 @@
                                         class="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                                         <input id="category-{{ $category->id }}" type="checkbox"
                                             value="{{ $category->slug }}"
-                                            x-on:click="toggleCollection('{{ $category->slug }}', 'category')"
+                                            x-on:click="toggleCollection('{{ $category->slug }}', 'category');
+                                            toggleCollectionId('{{ $category->id }}', 'category')"
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                         <label for="category-{{ $category->id }}"
                                             class="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
@@ -189,10 +205,11 @@
         <!-- Category Selection -->
         <span class="text-xl">Categories</span>
         <hr class="border-gray-300">
-        <div class="flex flex-col gap-2 text-indigo-500">
+        <div class="flex flex-col gap-2 text-sky-500">
             <template x-for="category in categories">
                 <span class="text-xl leading-6" x-text="category"></span>
             </template>
         </div>
     </div>
+    @livewireEditorjsScripts
 </div>
