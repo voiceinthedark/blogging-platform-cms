@@ -1,4 +1,9 @@
-<div class="flex flex-row justify-start" x-data="dataHandler()">
+<div class="flex flex-row justify-start" x-data="dataHandler()" x-init=" /* Watch the tags array if it changes console it */
+ $watch('tags', () => {
+     console.log(tags.toString());
+     console.log($wire.tagCollection)
+     $wire.set('tagCollection', tags);
+ })">
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('dataHandler', () => {
@@ -56,12 +61,7 @@
 
 
         <div class="w-8/12 flex justify-between">
-            <div class="flex flex-row justify-evenly gap-2" x-init=" /* Watch the tags array if it changes console it */
-             $watch('tags', () => {
-                 console.log(tags.toString());
-                 console.log($wire.tagCollection)
-                 $wire.set('tagCollection', tags);
-             })">
+            <div class="flex flex-row justify-evenly gap-2">
                 <!-- Tags Dropdown Menu -->
                 <div class="w-8/12 mt-2 flex flex-col justify-between relative"
                     x-on:keydown.escape.prevent.stop="close('tag')">
@@ -181,7 +181,7 @@
         <span class="text-xl">Tags</span>
         <hr class="border-gray-300">
         <!-- Tags Selection -->
-        <div class="flex flex-row flex-wrap gap-2 h-[50%] text-blue-500">
+        <div class="flex flex-col flex-wrap gap-2 h-[50%] text-blue-500">
             <template x-for="tag in tags">
                 <span class="text-xl leading-6" x-text="tag"></span>
             </template>
@@ -189,8 +189,10 @@
         <!-- Category Selection -->
         <span class="text-xl">Categories</span>
         <hr class="border-gray-300">
-        <div class="flex flex-row flex-wrap gap-2 h-[50%] text-blue-500">
-
+        <div class="flex flex-col gap-2 text-indigo-500">
+            <template x-for="category in categories">
+                <span class="text-xl leading-6" x-text="category"></span>
+            </template>
         </div>
     </div>
 </div>
