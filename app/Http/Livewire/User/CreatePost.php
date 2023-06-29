@@ -12,9 +12,9 @@ use Illuminate\Support\Str;
 class CreatePost extends Component
 {
 
-    protected $listeners = [
-        'editorjs-save:editorjs-create-post' => 'saveEditorState'
-    ];
+    // protected $listeners = [
+    //     'editorjs-save:editorjs-create-post' => 'saveEditorState'
+    // ];
 
 
     protected $rules = [
@@ -64,9 +64,9 @@ class CreatePost extends Component
         $this->categories = Category::where('name', 'LIKE', '%' . $this->categorySearch . '%')->get();
     }
 
-    public function saveEditorState($editorJsonData)
+    public function updatedContent($value): void
     {
-        $this->content = $editorJsonData;
+        // dd($value);
     }
 
     public function create()
@@ -90,6 +90,8 @@ class CreatePost extends Component
 
 
         $this->reset();
+        $this->tags = Tag::all();
+        $this->categories = Category::all();
         $this->emit('createPost');
 
         session()->flash('flash.banner', 'Post Created');

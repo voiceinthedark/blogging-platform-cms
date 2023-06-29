@@ -15,6 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Styles -->
+        <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         @livewireStyles
     </head>
     <body class="font-sans antialiased">

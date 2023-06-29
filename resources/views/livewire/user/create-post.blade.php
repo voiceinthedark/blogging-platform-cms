@@ -9,7 +9,7 @@
      console.log(categories.toString());
      console.log($wire.categoryCollection);
      $wire.set('categoryCollection', categoriesId);
- });">
+ });" wire:ignore>
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('dataHandler', () => {
@@ -52,12 +52,12 @@
                         // if tag is not in the array, add it else remove it
                         callingAction == 'tag' ? this.tagsId.includes(tag) ? this.tagsId.splice(this.tagsId
                                 .indexOf(tag), 1) : this.tagsId.push(tag) : this.categoriesId.includes(
-                            tag) ? this.categoriesId.splice(this.categoriesId.indexOf(tag), 1) : this
+                                tag) ? this.categoriesId.splice(this.categoriesId.indexOf(tag), 1) : this
                             .categoriesId.push(tag);
                     },
                 }
             })
-        })
+        });
     </script>
     <div class="flex flex-col justify-start items-center w-[90%]">
 
@@ -68,18 +68,20 @@
             <x-input id="title" type="text" wire:model="title" />
             <x-input-error for="title" />
         </div>
-        <div class="w-8/12 flex flex-col" wire:ignore>
-            <x-label for="content" value="Content" />
-            <x-textarea class="min-h-[400px]" id="content" wire:model="content"> </x-textarea>
-            <x-input-error for="editorjs-create-post" />
+        <div id="toolbar"></div>
+        <div class="w-8/12 min-h-[500px] flex flex-col bg-white rounded-lg shadow-sm" id="quill-editor" wire:ignore>
+
+
+
         </div>
+        <x-input-error for="quill-editor" />
 
 
         <div class="w-8/12 flex justify-between">
-            <div class="flex flex-row justify-evenly gap-2">
+            <div class="flex flex-row justify-evenly gap-2" wire:ignore>
                 <!-- Tags Dropdown Menu -->
                 <div class="w-8/12 mt-2 flex flex-col justify-between relative"
-                    x-on:keydown.escape.prevent.stop="close('tag')" wire:ignore>
+                    x-on:keydown.escape.prevent.stop="close('tag')">
                     <button id="dropdownTagSearchButton" x-on:click="toggle('tag')"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         type="button">Tag search <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none"
@@ -88,7 +90,7 @@
                             </path>
                         </svg></button>
                     <!-- Dropdown menu -->
-                    <div id="dropdownTagSearch" class="absolute left-0 bottom-14 mt-2 w-56 rounded-md shadow-lg"
+                    <div id="dropdownTagSearch" class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg"
                         style="display: none;" x-show="openTag" x-on:click.outside="close('tag')">
                         <div class="p-3">
                             <label for="input-tag-search" class="sr-only">Search</label>
@@ -142,8 +144,9 @@
                             </path>
                         </svg></button>
                     <!-- Dropdown menu -->
-                    <div id="dropdownCategorySearch" class="absolute left-0 bottom-14 mt-2 w-56 rounded-md shadow-lg"
-                        style="display: none;" x-show="openCategory" x-on:click.outside="close('category')">
+                    <div id="dropdownCategorySearch"
+                        class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg" style="display: none;"
+                        x-show="openCategory" x-on:click.outside="close('category')">
                         <div class="p-3">
                             <label for="input-category-search" class="sr-only">Search</label>
                             <div class="relative">
@@ -211,5 +214,35 @@
             </template>
         </div>
     </div>
-    @livewireEditorjsScripts
+    <!-- Add Quill Editor script -->
+    {{-- <script src="//cdn.quilljs.com/1.3.6/quill.js"></script> --}}
+    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script>
+        var FontAttributor = Quill.import('attributors/class/font');
+        FontAttributor.whitelist = [
+            'sofia', 'slabo', 'roboto', 'inconsolata', 'ubuntu'
+        ];
+        Quill.register(FontAttributor, true);
+
+        const toolbarOptions = [
+                    ['bold', 'italic', 'underline', 'strike', 'code', 'link'],
+                    ['blockquote', 'code-block'],
+                    ['image', 'video'],
+                ];
+
+        var quill = new Quill('#quill-editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: toolbarOptions,
+            },
+            placeholder: 'Type something...',
+
+        });
+
+        /* Capture text-change event on the quill editor and send it to livewire component CreatePost */
+        quill.on('text-change', function() {
+            let value = document.getElementById('quill-editor').innerHTML;
+            @this.set('content', value);
+        });
+    </script>
 </div>
