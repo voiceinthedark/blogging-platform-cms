@@ -80,6 +80,7 @@ class CreatePost extends Component
             'user_id' => auth()->user()->id,
             'title' => $this->title,
             'content' => $this->content,
+            /* FIX: Excerpt when getting full HTML output */
             'excerpt' => Str::excerpt($this->content),
             'slug' => Str::slug($this->title),
         ]);

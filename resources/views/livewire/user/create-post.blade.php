@@ -59,17 +59,17 @@
             })
         });
     </script>
-    <div class="flex flex-col justify-start items-center w-[90%]">
+    <div class="flex flex-col justify-start items-center w-[90%]" wire:ignore>
 
         <x-banner />
 
-        <div class="w-8/12 flex flex-col">
+        <div class="w-[71%] flex flex-col">
+            <x-input-error for="title" />
             <x-label for="title" value="Title" />
             <x-input id="title" type="text" wire:model="title" />
-            <x-input-error for="title" />
         </div>
-        <div id="toolbar"></div>
-        <div class="w-8/12 min-h-[500px] flex flex-col bg-white rounded-lg shadow-sm" id="quill-editor" wire:ignore>
+        {{-- <div id="toolbar"></div> --}}
+        <div class="w-[71%] min-h-[500px] flex flex-col bg-white rounded-lg shadow-sm" id="quill-editor">
 
 
 
@@ -218,16 +218,24 @@
     {{-- <script src="//cdn.quilljs.com/1.3.6/quill.js"></script> --}}
     <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script>
-        var FontAttributor = Quill.import('attributors/class/font');
-        FontAttributor.whitelist = [
-            'sofia', 'slabo', 'roboto', 'inconsolata', 'ubuntu'
-        ];
-        Quill.register(FontAttributor, true);
 
         const toolbarOptions = [
-                    ['bold', 'italic', 'underline', 'strike', 'code', 'link'],
+                     ['bold', 'italic', 'underline', 'strike'],
                     ['blockquote', 'code-block'],
-                    ['image', 'video'],
+
+                    [{'header': 1}, {'header': 2}],
+                    [{'list': 'ordered'}, {'list': 'bullet'}],
+                    [{'script': 'sub'}, {'script': 'super'}],
+                    [{'indent': '-1'}, {'indent': '+1'}],
+                    [{'direction': 'rtl'}],
+
+                    [{'size': ['small', false, 'large', 'huge']}],
+                    [{'header': [1, 2, 3, 4, 5, 6, false]}],
+
+                    [{'color': []}, {'background': []}],
+                    [{'align': []}],
+                    ['link', 'image', 'video'],
+                    ['clean'],
                 ];
 
         var quill = new Quill('#quill-editor', {
