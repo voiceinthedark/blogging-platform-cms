@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome', [
         'posts' => Post::all(),
     ]);
-});
+})->name('welcome');
 
 
 Route::middleware([
