@@ -11,6 +11,11 @@ class ShowPost extends Component
 
     public $post;
 
+    public function editPost($id){
+        $this->post = Post::find($id);
+        return view('posts.create', ['post' => $this->post]);
+    }
+
     public function deletePost($id)
     {
         Post::find($id)->delete();

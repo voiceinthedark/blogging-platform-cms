@@ -10,6 +10,7 @@
      console.log($wire.categoryCollection);
      $wire.set('categoryCollection', categoriesId);
  });" wire:ignore>
+
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('dataHandler', () => {
@@ -72,7 +73,7 @@
         <div class="w-[71%] min-h-[500px] flex flex-col bg-white rounded-lg shadow-sm" id="quill-editor">
             @if (!empty($post))
                 <!-- parse the html -->
-                {{!! $post->content !!}}
+                {!! $post->content !!}
             @endif
 
         </div>
@@ -192,7 +193,7 @@
 
             <div class="mt-2">
                 <x-button wire:click="resetFields">Cancel</x-button>
-                <x-button type="submit" wire:click.prevent="create">Submit</x-button>
+                <x-button type="submit" wire:click.prevent="update">Submit</x-button>
             </div>
         </div>
     </div>

@@ -5,11 +5,10 @@ namespace App\Http\Livewire\User;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
-use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
-class CreatePost extends Component
+class EditPost extends Component
 {
 
     //? Add listenener to Browser event?
@@ -38,14 +37,17 @@ class CreatePost extends Component
 
     //? Use the same code for editing as well? Mounting the Post Component??
 
-    public function mount()
+    public function mount($post)
     {
-        $this->title =  '';
-        $this->content =  '';
-        $this->tags = Tag::all();
+        $this->post = $post;
+        $this->title = $this->post->title ?? '';
+        $this->content = $this->post->content ?? '';
+        $this->tagCollection = $this->post->tags;
         $this->tagSearch = '';
-        $this->categories = Category::all();
+        $this->tags= Tag::all();
+        $this->categoryCollection = $this->post->categories;
         $this->categorySearch = '';
+        $this->categories = Category::all();
     }
 
     public function updated($propertyName)
@@ -74,31 +76,26 @@ class CreatePost extends Component
         // dd($value);
     }
 
-    public function create()
+    public function update()
     {
 
         $this->validate();
 
-        $post = Post::create([
-            'user_id' => auth()->user()->id,
+        $post = Post::find($this->post->id);
+
+        $post->update([
             'title' => $this->title,
             'content' => $this->content,
-            // TODO: Excerpt when getting full HTML output
             'excerpt' => Str::excerpt($this->content),
             'slug' => Str::slug($this->title),
+
         ]);
 
+        $post->tags()->sync($this->tagCollection);
+        $post->categories()->sync($this->categoryCollection);
 
-        $post->tags()->attach($this->tagCollection);
-        $post->categories()->attach($this->categoryCollection);
 
-
-        $this->reset();
-        $this->tags = Tag::all();
-        $this->categories = Category::all();
-        $this->emit('createPost');
-
-        session()->flash('flash.banner', 'Post Created');
+        session()->flash('flash.banner', 'Post Updated');
         session()->flash('flash.bannerStyle', 'success');
 
         return redirect('/dashboard');
@@ -106,6 +103,9 @@ class CreatePost extends Component
 
     public function render()
     {
-        return view('livewire.user.create-post');
+        return view('livewire.user.edit-post', [
+            'tags' => $this->tagCollection,
+            'categories' => $this->categoryCollection,
+        ]);
     }
 }
