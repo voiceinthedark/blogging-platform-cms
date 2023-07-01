@@ -92,7 +92,7 @@
                             </path>
                         </svg></button>
                     <!-- Dropdown menu -->
-                    <div id="dropdownTagSearch" class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg"
+                    <div id="dropdownTagSearch" class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg bg-white"
                         style="display: none;" x-show="openTag" x-on:click.outside="close('tag')">
                         <div class="p-3">
                             <label for="input-tag-search" class="sr-only">Search</label>
@@ -147,7 +147,7 @@
                         </svg></button>
                     <!-- Dropdown menu -->
                     <div id="dropdownCategorySearch"
-                        class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg" style="display: none;"
+                        class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg bg-white" style="display: none;"
                         x-show="openCategory" x-on:click.outside="close('category')">
                         <div class="p-3">
                             <label for="input-category-search" class="sr-only">Search</label>

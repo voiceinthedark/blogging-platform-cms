@@ -1,4 +1,4 @@
-<div class="flex flex-row justify-start" x-data="dataHandler()" x-init=" /* Watch the tags array if it changes console it */
+<div class="flex flex-row justify-start" x-data="dataHandler({{$post->tags}}, {{$post->categories}})" x-init=" /* Watch the tags array if it changes console it */
  $watch('tags', () => {
      console.log(tags.toString());
      console.log($wire.tagCollection)
@@ -13,14 +13,29 @@
 
     <script>
         document.addEventListener('alpine:init', () => {
-            Alpine.data('dataHandler', () => {
+            Alpine.data('dataHandler', (tags, categories) => {
+                // Extract the slug from the tags and categories objects
+                let tagSlug = [];
+                let categorySlug = [];
+                let tagObjIds = [];
+                let categoryObjIds = [];
+                for(let i = 0; i < tags.length; i++) {
+                    tagSlug[i] = tags[i].slug;
+                    tagObjIds[i] = tags[i].id;
+                }
+                for(let i = 0; i < categories.length; i++) {
+                    categorySlug[i] = categories[i].slug;
+                    categoryObjIds[i] = categories[i].id;
+                }
+
+                console.log(tags, categories);
                 return {
                     openTag: false,
                     openCategory: false,
-                    tags: [],
-                    tagsId: [],
-                    categories: [],
-                    categoriesId: [],
+                    tags: tagSlug,
+                    tagsId: tagObjIds,
+                    categories: categorySlug,
+                    categoriesId: categoryObjIds,
                     toggle(type) {
                         switch (type) {
                             case 'tag':
@@ -93,7 +108,7 @@
                             </path>
                         </svg></button>
                     <!-- Dropdown menu -->
-                    <div id="dropdownTagSearch" class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg"
+                    <div id="dropdownTagSearch" class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md bg-white shadow-lg"
                         style="display: none;" x-show="openTag" x-on:click.outside="close('tag')">
                         <div class="p-3">
                             <label for="input-tag-search" class="sr-only">Search</label>
@@ -121,7 +136,8 @@
                                         <input id="tag-{{ $tag->id }}" type="checkbox" value="{{ $tag->slug }}"
                                             x-on:click="toggleCollection('{{ $tag->slug }}', 'tag');
                                             toggleCollectionId('{{ $tag->id }}', 'tag')"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                            @if ($post->tags->contains($tag->id)) checked @endif>
                                         <label for="tag-{{ $tag->id }}"
                                             class="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
                                             <div class="flex">
@@ -148,7 +164,7 @@
                         </svg></button>
                     <!-- Dropdown menu -->
                     <div id="dropdownCategorySearch"
-                        class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg" style="display: none;"
+                        class="absolute bg-white left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg" style="display: none;"
                         x-show="openCategory" x-on:click.outside="close('category')">
                         <div class="p-3">
                             <label for="input-category-search" class="sr-only">Search</label>
@@ -176,7 +192,8 @@
                                             value="{{ $category->slug }}"
                                             x-on:click="toggleCollection('{{ $category->slug }}', 'category');
                                             toggleCollectionId('{{ $category->id }}', 'category')"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                            @if ($post->categories->contains($category->id)) checked @endif>
                                         <label for="category-{{ $category->id }}"
                                             class="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
                                             <div class="flex">
