@@ -92,10 +92,11 @@
         <!-- TODO: Fix the flashing invisible textarea's textContent -->
         <div class="col-span-6 sm:col-span-4">
             {{-- <x-section-border /> --}}
-            <x-label for="bio" value="{{ __('Bio') }}" />
+            {{-- <x-label for="bio" value="{{ __('Bio') }}" />
             <x-textarea name="bio" id="bio" rows="5" cols="30" class="mt-1 block w-full" wire:model.defer="state.bio" >
                 {{ $this->user->userProfile->bio }}
-            </x-textarea>
+            </x-textarea> --}}
+            <x-textarea-wireui wire:model.defer="state.bio" label="Bio" placeholder="{{$this->user->userProfile->bio}}"></x-textarea-wireui>
             <x-input-error for="bio" class="mt-2" />
         </div>
 
