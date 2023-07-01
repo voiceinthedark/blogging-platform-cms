@@ -218,26 +218,54 @@
     {{-- <script src="//cdn.quilljs.com/1.3.6/quill.js"></script> --}}
     <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script>
-
         const toolbarOptions = [
-                     ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote', 'code-block'],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
 
-                    [{'header': 1}, {'header': 2}],
-                    [{'list': 'ordered'}, {'list': 'bullet'}],
-                    [{'script': 'sub'}, {'script': 'super'}],
-                    [{'indent': '-1'}, {'indent': '+1'}],
-                    [{'direction': 'rtl'}],
+            [{
+                'header': 1
+            }, {
+                'header': 2
+            }],
+            [{
+                'list': 'ordered'
+            }, {
+                'list': 'bullet'
+            }],
+            [{
+                'script': 'sub'
+            }, {
+                'script': 'super'
+            }],
+            [{
+                'indent': '-1'
+            }, {
+                'indent': '+1'
+            }],
+            [{
+                'direction': 'rtl'
+            }],
 
-                    [{'size': ['small', false, 'large', 'huge']}],
-                    [{'header': [1, 2, 3, 4, 5, 6, false]}],
+            [{
+                'size': ['small', false, 'large', 'huge']
+            }],
+            [{
+                'header': [1, 2, 3, 4, 5, 6, false]
+            }],
 
-                    [{'color': []}, {'background': []}],
-                    [{'align': []}],
-                    ['link', 'image', 'video'],
-                    ['clean'],
-                ];
+            [{
+                'color': []
+            }, {
+                'background': []
+            }],
+            [{
+                'align': []
+            }],
+            ['link', 'image', 'video'],
+            ['clean'],
+        ];
 
+        //? Send image through xhr?
         var quill = new Quill('#quill-editor', {
             theme: 'snow',
             modules: {

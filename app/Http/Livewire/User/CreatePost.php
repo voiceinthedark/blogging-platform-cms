@@ -12,9 +12,7 @@ use Illuminate\Support\Str;
 class CreatePost extends Component
 {
 
-    // protected $listeners = [
-    //     'editorjs-save:editorjs-create-post' => 'saveEditorState'
-    // ];
+    //? Add listenener to Browser event?
 
 
     protected $rules = [
@@ -32,6 +30,8 @@ class CreatePost extends Component
     public $categorySearch;
     public $tagCollection;
     public $categoryCollection;
+
+    //? Use the same code for editing as well? Mounting the Post Component??
 
     public function mount()
     {
@@ -74,13 +74,11 @@ class CreatePost extends Component
 
         $this->validate();
 
-        // dd($this->categoryCollection, $this->tagCollection);
-
         $post = Post::create([
             'user_id' => auth()->user()->id,
             'title' => $this->title,
             'content' => $this->content,
-            /* FIX: Excerpt when getting full HTML output */
+            // TODO: Excerpt when getting full HTML output
             'excerpt' => Str::excerpt($this->content),
             'slug' => Str::slug($this->title),
         ]);

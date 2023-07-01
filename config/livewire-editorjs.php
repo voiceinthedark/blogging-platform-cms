@@ -19,7 +19,7 @@ return [
      * Taken from the offical docs of Editor.js:
      * https://editorjs.io/configuration#log-level
      */
-    'editorjs_log_level' => 'ERROR',
+    'editorjs_log_level' => 'INFO',
 
     // Defines on which disk images, uploaded through the editor, should be stored.
     'default_img_upload_disk' => 'public',
