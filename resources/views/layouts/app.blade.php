@@ -12,13 +12,15 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
+        @wireUiScripts()
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
         <!-- Styles -->
         <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        @wireUiScripts
+
         @livewireStyles
+
     </head>
     <body class="font-sans antialiased">
         <x-banner />
@@ -44,6 +46,7 @@
         @stack('modals')
 
         @livewireScripts
+
 
     </body>
 </html>

@@ -59,16 +59,16 @@
         <tbody>
             <!-- Get User's Posts -->
             <div>
-
                 @foreach ($posts as $post)
-
-                    <livewire:user.show-post :post="$post" wire:key="{{ $post->id }}" />
+                    <livewire:user.show-post :post="$post" key="{{ $post->id }}" />
                 @endforeach
                 {{ $posts->links() }}
-            </div>
+
 
 
         </tbody>
     </table>
     <!-- Delete User Confirmation Modal -->
+
+
 </div>

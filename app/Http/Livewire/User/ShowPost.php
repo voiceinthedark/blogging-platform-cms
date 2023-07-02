@@ -19,6 +19,21 @@ class ShowPost extends Component
 
     public function deletePost($id)
     {
+        // $this->dialog()->confirm([
+        //     'title'       => 'Are you Sure?',
+        //     'description' => 'Delete the information?',
+        //     'icon'        => 'question',
+        //     'accept'      => [
+        //         'label'  => 'Yes, delete it',
+        //         'method' => 'deletePost',
+        //         'params' => $id,
+        //     ],
+        //     'reject' => [
+        //         'label'  => 'No, cancel',
+        //         'method' => 'cancel',
+        //     ],
+        // ]);
+
         Post::find($id)->delete();
         // Send event to refresh the list
         $this->emitTo('user.show-post-list', 'postDeleted');

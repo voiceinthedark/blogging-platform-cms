@@ -2,6 +2,7 @@
 
         <div>
             <livewire:user.show-post-list :posts="$posts" />
+
         </div>
 
 
