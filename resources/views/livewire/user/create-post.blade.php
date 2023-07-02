@@ -72,7 +72,7 @@
         <div class="w-[71%] min-h-[500px] flex flex-col bg-white rounded-lg shadow-sm" id="quill-editor">
             @if (!empty($post))
                 <!-- parse the html -->
-                {{!! $post->content !!}}
+                {!! $post->content !!}
             @endif
 
         </div>

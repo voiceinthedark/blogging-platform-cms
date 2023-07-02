@@ -25,14 +25,14 @@ Route::get('/', function () {
 
 Route::get('post/{post:slug}', [PostController::class, 'show'])->name('posts.show');
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
-])->group(function () {
+    ])->group(function () {
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
     Route::post('/dashboard', [PostController::class, 'index']);
-    Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
-    Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
 });

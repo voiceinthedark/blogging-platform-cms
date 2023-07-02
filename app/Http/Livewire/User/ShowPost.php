@@ -5,6 +5,7 @@ namespace App\Http\Livewire\User;
 use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
+use WireUi\Traits\Actions;
 
 class ShowPost extends Component
 {
