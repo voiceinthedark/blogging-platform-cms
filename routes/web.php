@@ -23,6 +23,8 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
+Route::get('post/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+
 
 Route::middleware([
     'auth:sanctum',

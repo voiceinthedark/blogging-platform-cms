@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center min-w-[1200px] py-8 px-4 mx-auto w-9/12 max-w-screen-xl lg:py-16">
+<div class="flex flex-col justify-center min-w-[1200px] py-8 px-4 mx-auto w-9/12 max-w-screen-xl lg:py-10">
     <div class="bg-gray-50  border border-gray-200  rounded-lg p-8 md:p-12 mb-8">
 
         <!-- Tags list -->
@@ -19,7 +19,7 @@
         </p>
         <div class="flex flex-row justify-between">
             <div>
-                <a href="#"
+                <a href="{{route('posts.show', $post->slug)}}"
                     class="inline-flex justify-center items-center py-2.5 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 ">
                     Read more
                     <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
@@ -32,7 +32,7 @@
                 <!-- Edit if user is logged in-->
                 @if(Auth::check())
                     @if ($post->user_id == Auth::user()->id)
-                        <a href="#"
+                        <a href="{{route('posts.edit', $post->id)}}"
                             class="inline-flex justify-center items-center py-2.5 px-5 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 ">
                             Edit Post
                             <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
