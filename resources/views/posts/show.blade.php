@@ -43,7 +43,7 @@
 
                                 <x-nav-link class="mt-4" href="{{ route('logout') }}"
                                          @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
+                                    {{ __('Logout') }}
                                 </x-nav-link>
                             </form>
 
@@ -82,7 +82,7 @@
         </div>
     </nav>
 
-    <div class="flex flex-col w-[80%] mx-auto justify-center items-center">
+    <div class="flex flex-col w-[80%] mx-auto justify-center items-center bg-white mt-4 shadow-lg shadow-gray-300">
         <div class="text-7xl font-bold mt-8">{{ $post->title }}</div>
         <div class="flex flex-row justify-between">
             <div class="w-6/12">

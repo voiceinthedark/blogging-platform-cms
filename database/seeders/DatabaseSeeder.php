@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Role;
 use App\Models\Tag;
@@ -52,6 +53,9 @@ class DatabaseSeeder extends Seeder
                 });
             }
         );
+
+        // Run the Comment factory
+        Comment::factory(500)->create();
 
 
     }
