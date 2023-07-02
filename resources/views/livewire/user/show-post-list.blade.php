@@ -61,6 +61,7 @@
             <div>
 
                 @foreach ($posts as $post)
+
                     <livewire:user.show-post :post="$post" wire:key="{{ $post->id }}" />
                 @endforeach
                 {{ $posts->links() }}

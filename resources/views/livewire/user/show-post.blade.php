@@ -1,7 +1,7 @@
 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
     <th scope="row" class="flex max-w-md items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
         <div class="pl-3">
-            <div class="text-base font-semibold">{{ $post->title }}</div>
+            <div class="text-base font-semibold"><a href="{{ route('posts.show', $post->slug)}}" class="hover:underline hover:text-gray-600 transition-colors">{{ $post->title }}</a></div>
             <div class="font-normal text-gray-500">
                 @foreach ($post->tags as $tag)
                     <a href="#"
