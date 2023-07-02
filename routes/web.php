@@ -32,7 +32,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard', [PostController::class, 'index']);
     Route::get('/post/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-    Route::post('/dashboard', [PostController::class, 'index']);
 });

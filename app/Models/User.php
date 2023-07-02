@@ -82,4 +82,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)
             ->withTimestamps();
     }
+
+    // Latest post
+    public function latestPost(): HasOne{
+        return $this->hasOne(Post::class)->latestOfMany();
+    }
+
+    // Oldest Post
+    public function oldestPost(): HasOne{
+        return $this->hasOne(Post::class)->oldestOfMany();
+    }
+
+
 }

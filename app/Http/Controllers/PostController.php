@@ -14,7 +14,6 @@ class PostController extends Controller
      */
     public function index()
     {
-
         return view('dashboard', [
             'posts' => Post::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(10),
         ]);
@@ -72,5 +71,10 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    // Get Latest Posts
+    public function latestPosts(){
+        return Post::latest()->take(5)->get();
     }
 }

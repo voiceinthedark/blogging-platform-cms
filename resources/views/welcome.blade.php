@@ -90,8 +90,13 @@
         </div>
     </header>
 
-    <div>
-        <livewire:show-posts :posts="$posts" />
+    <div class="flex flex-row flex-2">
+        <div>
+            <livewire:show-posts :posts="$posts" />
+        </div>
+        <div class="bg-white h-full max-w-xs rounded-lg shadow-lg p-2 mt-10">
+            <livewire:post.show-latest />
+        </div>
     </div>
 
 
