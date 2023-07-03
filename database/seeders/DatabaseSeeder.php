@@ -40,7 +40,6 @@ class DatabaseSeeder extends Seeder
                 UserProfile::factory()->create([
                     'user_id' => $user->id
                 ]);
-                // echo 'User ' . $user->id . ' created' . PHP_EOL;
 
                 $user->roles()->attach(Role::where('name', 'user')->first());
                 Post::factory(rand(1, 5))->create([
@@ -55,7 +54,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // Run the Comment factory
-        Comment::factory(500)->create();
+        Comment::factory(600)->create();
 
 
     }

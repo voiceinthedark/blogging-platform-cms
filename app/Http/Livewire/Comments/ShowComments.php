@@ -8,10 +8,12 @@ use Livewire\Component;
 class ShowComments extends Component
 {
     public $post;
+    public $comment;
     public $comments;
 
     public function mount(Post $post){
         $this->post = $post;
+        $this->comment = '';
         $this->comments = $post->comments;
     }
 
