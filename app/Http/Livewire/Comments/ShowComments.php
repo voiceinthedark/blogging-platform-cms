@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Comments;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Livewire\Component;
 
@@ -19,7 +20,7 @@ class ShowComments extends Component
     public function mount(Post $post){
         $this->post = $post;
         $this->comment = '';
-        $this->comments = $post->comments->sortByDesc('created_at');
+        $this->comments = Comment::rootComments()->where('post_id', $post->id)->get();
     }
 
     public function storeComment(int $commentId = null){
@@ -41,6 +42,8 @@ class ShowComments extends Component
 
     public function render()
     {
-        return view('livewire.comments.show-comments');
+        return view('livewire.comments.show-comments', [
+            'comments' => Comment::rootComments()->where('post_id', $this->post->id)->get(),
+        ]);
     }
 }

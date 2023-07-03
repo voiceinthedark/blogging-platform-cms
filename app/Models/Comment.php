@@ -38,4 +38,15 @@ class Comment extends Model
     public function replies() : HasMany{
         return $this->hasMany(Comment::class, 'parent_id', 'id');
     }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Comment::class, 'parent_id', 'id');
+    }
+
+    // Defining a local scope to filter comments based on their parent
+    public function scopeRootComments($query){
+        return $query->whereNull('parent_id');
+    }
+
 }

@@ -119,7 +119,7 @@
                 <span class="font-semibold">{{ $post->comments->count() }} comments</span>
             </div>
             <x-section-border />
-            <livewire:comments.show-comments :comments="$post->comments" :post="$post"/>
+            <livewire:comments.show-comments :comments="$comments" :post="$post"/>
         </div>
     </div>
 
