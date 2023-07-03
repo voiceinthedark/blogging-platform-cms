@@ -1,4 +1,12 @@
 <div>
+    <!-- Write comment on Post -->
+    <div class="mb-14" wire:ignore>
+        <x-textarea-wireui id="comment-{{Str::uuid()}}" name="comment" label="{{ auth()->user()->name}}" placeholder="Write your thoughts here..." wire:model="comment">
+
+        </x-textarea-wireui>
+        <x-button-wireui blue class="mt-2" wire:click="storeComment()" wire:keydown.enter="storeComment()">Reply</x-button-wireui>
+
+    </div>
     @foreach ($post->comments as $comment)
         <div x-data="{commentShow: false}">
             <div class="flex flex-col items-start">
@@ -13,9 +21,9 @@
             </div>
             <div class="mb-4 mt-2 ml-12" x-show="commentShow" wire:target="comment" x-transition:enter="transition ease-in duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"  x-transition:leave="transition ease-out duration-200"
              wire:ignore>
-                <x-textarea-wireui label="{{ auth()->user()->name}}" wire:model="comment">
-
+                <x-textarea-wireui id="comment-{{$comment->id}}" name="comment" label="{{ auth()->user()->name}}" wire:model="comment">
                 </x-textarea-wireui>
+                <x-button-wireui blue class="mt-2" wire:click="storeComment({{ $comment->id }})" wire:keydown.enter="storeComment({{ $comment->id }})">Reply</x-button-wireui>
             </div>
         </div>
     @endforeach

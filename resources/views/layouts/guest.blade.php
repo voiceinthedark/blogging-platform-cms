@@ -30,7 +30,7 @@
     <div class="font-sans text-gray-900 antialiased">
         {{ $slot }}
     </div>
-    @livewireScripts
+
     <footer class="bg-white mt-16 dark:bg-gray-900" x-data>
         <div
             class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
@@ -55,6 +55,7 @@
             </div>
         </div>
     </footer>
+    @livewireScripts
 </body>
 
 </html>

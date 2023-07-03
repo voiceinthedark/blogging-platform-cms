@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class PostController extends Controller
     {
         return view('posts.show', [
             'post' => $post,
-            'comments' => $post->comments,
+            'comments' => $post->comments->sortByDesc('created_at'),
         ]);
     }
 
