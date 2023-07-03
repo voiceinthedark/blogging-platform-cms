@@ -37,6 +37,7 @@ class ShowComments extends Component
         ]);
 
         $this->emitSelf('commentStored');
+        // $this->reset();
 
         return response()->json([$this->post->comments->last()]);
     }

@@ -28,7 +28,7 @@
             @if (!empty($comment->replies))
                 @if (count($comment->replies) > 0)
                     <button type="button" class="mb-2 text-blue-600 hover:text-blue-400 transition-colors"
-                        x-on:click="replyShow = !replyShow">show {{ count($comment->replies) }} replies</button>
+                        x-on:click="replyShow = !replyShow" x-text="replyShow ? 'hide ' + {{ count($comment->replies) }} + ' replies' : 'show ' + {{ count($comment->replies) }} + ' replies'"></button>
                 @endif
                 @foreach ($comment->replies as $reply)
                 <div x-data="{replyTo: false, user: '@' + '{{$reply->user->name}}' }" x-show="replyShow" id="{{ $reply->id }}"
@@ -53,7 +53,7 @@
                             <div x-show="replyTo">
                                 <x-textarea-wireui wire:model="comment" id="reply-{{$reply->id}}" x-model="user" x-on:input="comment = user + $event.target.value" placeholder="Reply..." class="mt-2"></x-textarea-wireui>
                                 <x-button-wireui blue class="mt-2" wire:click.prevent="storeComment({{ $comment->id }})"
-                                    wire:keydown.enter.prevent="storeComment({{ $comment->id }})">Reply</x-button-wireui>
+                                    wire:keydown.enter.prevent="storeComment({{ $comment->id }})" x-on:click="replyTo = !replyTo">Reply</x-button-wireui>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                     wire:model="comment">
                 </x-textarea-wireui>
                 <x-button-wireui blue class="mt-2" wire:click="storeComment({{ $comment->id }})"
-                    wire:keydown.enter="storeComment({{ $comment->id }})">Reply</x-button-wireui>
+                    wire:keydown.enter="storeComment({{ $comment->id }})" >Reply</x-button-wireui>
             </div>
         </div>
     @endforeach
