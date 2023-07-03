@@ -31,7 +31,13 @@
                         x-on:click="replyShow = !replyShow">show {{ count($comment->replies) }} replies</button>
                 @endif
                 @foreach ($comment->replies as $reply)
-                <div x-data="{replyTo: false}" x-show="replyShow" id="{{ $reply->id }}">
+                <div x-data="{replyTo: false, user: '@' + '{{$reply->user->name}}' }" x-show="replyShow" id="{{ $reply->id }}"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-90"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-300"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-90">
                         <div class="ml-16">
                             <div class="flex flex-col items-start">
                                 <span class="font-bold">{{ $reply->user->name }}</span>
@@ -41,13 +47,13 @@
                                 {{ $reply->content }}
                             </div>
                             <div class="flex flex-row justify-end">
-                                <button type="button" class="text-blue-600" x-on:click="replyTo = !replyTo">
+                                <button type="button" class="text-blue-600" x-on:click="replyTo = !replyTo" >
                                     Reply</button>
                             </div>
                             <div x-show="replyTo">
-                                <x-textarea-wireui id="reply-{{$reply->id}}">@ {{ $reply->user->name }} </x-textarea-wireui>
-                                <x-button-wireui blue class="mt-2" wire:click="storeComment({{ $comment->id }})"
-                                    wire:keydown.enter="storeComment({{ $comment->id }})">Reply</x-button-wireui>
+                                <x-textarea-wireui wire:model="comment" id="reply-{{$reply->id}}" x-model="user" x-on:input="comment = user + $event.target.value" placeholder="Reply..." class="mt-2"></x-textarea-wireui>
+                                <x-button-wireui blue class="mt-2" wire:click.prevent="storeComment({{ $comment->id }})"
+                                    wire:keydown.enter.prevent="storeComment({{ $comment->id }})">Reply</x-button-wireui>
                             </div>
                         </div>
                     </div>

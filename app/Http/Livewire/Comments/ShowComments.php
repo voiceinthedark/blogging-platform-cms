@@ -27,6 +27,7 @@ class ShowComments extends Component
         $this->validate([
             'comment' => 'required'
         ]);
+
         $this->post->comments()->create([
             'user_id' => auth()->user()->id,
             'post_id' => $this->post->id,
