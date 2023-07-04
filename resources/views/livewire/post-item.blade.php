@@ -50,7 +50,7 @@
             </div>
             <!-- Author -->
             <div class="flex flex-col">
-                <a href="#" class="text-indigo-500"><span>{{ $post->user->name }}</span></a>
+                <a href="{{route('profile.showuser', [ 'username' => $post->user->userprofile->username])}}" class="text-indigo-500"><span>{{ $post->user->name }}</span></a>
                 <span class="text-gray-500">{{ $post->created_at->diffForHumans() }}</span>
             </div>
         </div>

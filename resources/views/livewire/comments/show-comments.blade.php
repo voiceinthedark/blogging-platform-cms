@@ -1,7 +1,7 @@
 <div>
     <!-- Write comment on Post -->
     <div class="mb-14" wire:ignore>
-        <x-textarea-wireui id="comment-{{ Str::uuid() }}" name="comment" label="{{ auth()->user()->name }}"
+        <x-textarea-wireui id="comment-{{ Str::uuid() }}" name="comment" label="{{'@' . auth()->user()->userprofile->username }}"
             placeholder="Write your thoughts here..." wire:model.debounce.500ms="comment">
 
         </x-textarea-wireui>
@@ -19,7 +19,7 @@
                     <x-avatar md src="{{ url($comment->user->userprofile->profile_photo_url) }}" />
                 </div>
                 <div class="flex flex-col items-start">
-                    <span class="font-bold">{{ $comment->user->name }}</span>
+                    <span class="font-bold">{{ '@' . $comment->user->userprofile->username }}</span>
                     <span class="text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
                 </div>
             </div>
