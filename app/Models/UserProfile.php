@@ -17,6 +17,11 @@ class UserProfile extends Model
         'profile_photo_path',
         'bio',
         'page_visits_count',
+        'username',
+        'twitter',
+        'facebook',
+        'instagram',
+        'github',
     ];
 
     /**

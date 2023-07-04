@@ -11,6 +11,7 @@ use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
+
     /**
      * Validate and update the given user's profile information.
      *
@@ -65,7 +66,13 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         } else {
             $user->forceFill([
                 'name' => $input['name'],
+                'username' => $input['username'],
                 'email' => $input['email'],
+                'bio' => $input['bio'],
+                'twitter' => $input['twitter'],
+                'facebook' => $input['facebook'],
+                'instagram' => $input['instagram'],
+                'github' => $input['github'],
             ])->save();
         }
     }
@@ -81,6 +88,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,
+            'username' => $input['username'],
+            'bio' => $input['bio'],
+            'twitter' => $input['twitter'],
+            'facebook' => $input['facebook'],
+            'instagram' => $input['instagram'],
+            'github' => $input['github'],
         ])->save();
 
         $user->sendEmailVerificationNotification();
