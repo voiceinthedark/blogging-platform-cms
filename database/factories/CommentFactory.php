@@ -20,7 +20,9 @@ class CommentFactory extends Factory
             'user_id' => rand(1, 100),
             'post_id' => rand(1, 300),
             'content' => $this->faker->text(200),
-            'parent_id' => null
+            'parent_id' => null,
+            'created_at' => $this->faker->dateTimeThisYear(),
+            'updated_at' => $this->faker->dateTimeThisYear(),
         ];
     }
 }

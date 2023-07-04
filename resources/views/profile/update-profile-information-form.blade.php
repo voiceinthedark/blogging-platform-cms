@@ -24,8 +24,6 @@
 
                 <x-label for="photo" value="{{ __('Photo') }}" />
 
-                {{-- {{dd($this->user->userProfile->profile_photo_url)}} --}}
-
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
                     <img src="{{ url($this->user->userProfile->profile_photo_url) }}" alt="{{ $this->user->name }}"
@@ -88,14 +86,44 @@
             @endif
         </div>
 
+        <!-- Username -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="username" value="{{ __('Username') }}" />
+            <x-input id="username" type="text" class="mt-1 block w-full" wire:model.defer="state.username" autocomplete="off" />
+            <x-input-error for="username" class="mt-2" />
+        </div>
+
+        <!-- Twitter handle -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="twitter" value="{{ __('twitter') }}" />
+            <x-input id="twitter" type="text" class="mt-1 block w-full" wire:model.defer="state.twitter" autocomplete="twitter" />
+            <x-input-error for="twitter" class="mt-2" />
+        </div>
+
+        <!-- facebook handle -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="facebook" value="{{ __('facebook') }}" />
+            <x-input id="facebook" type="text" class="mt-1 block w-full" wire:model.defer="state.facebook" autocomplete="facebook" />
+            <x-input-error for="facebook" class="mt-2" />
+        </div>
+
+        <!-- instagram handle -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="instagram" value="{{ __('instagram') }}" />
+            <x-input id="instagram" type="text" class="mt-1 block w-full" wire:model.defer="state.instagram" autocomplete="instagram" />
+            <x-input-error for="instagram" class="mt-2" />
+        </div>
+
+        <!-- github handle -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="github" value="{{ __('github') }}" />
+            <x-input id="github" type="text" class="mt-1 block w-full" wire:model.defer="state.github" autocomplete="github" />
+            <x-input-error for="github" class="mt-2" />
+        </div>
+
         <!-- Bio -->
         <!-- TODO: Fix the flashing invisible textarea's textContent -->
         <div class="col-span-6 sm:col-span-4">
-            {{-- <x-section-border /> --}}
-            {{-- <x-label for="bio" value="{{ __('Bio') }}" />
-            <x-textarea name="bio" id="bio" rows="5" cols="30" class="mt-1 block w-full" wire:model.defer="state.bio" >
-                {{ $this->user->userProfile->bio }}
-            </x-textarea> --}}
             <x-textarea-wireui wire:model.defer="state.bio" label="Bio" placeholder="{{$this->user->userProfile->bio}}"></x-textarea-wireui>
             <x-input-error for="bio" class="mt-2" />
         </div>

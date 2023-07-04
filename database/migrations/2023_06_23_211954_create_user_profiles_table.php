@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->unique();
-            $table->longText('bio')->nullable();
+            $table->string('username')->unique();
+            $table->string('twitter')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('github')->nullable();
+            $table->text('bio')->nullable();
             $table->unsignedBigInteger('page_visits_count')->default(0)->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();

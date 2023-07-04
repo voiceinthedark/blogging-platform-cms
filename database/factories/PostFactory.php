@@ -24,6 +24,11 @@ class PostFactory extends Factory
             'content' => $this->faker->paragraph(5),
             'slug' => Str::slug($title),
             'excerpt' => $this->faker->paragraph(1),
+            'views' => $this->faker->randomNumber(4),
+            'likes' => $this->faker->randomNumber(4),
+            'dislikes' => $this->faker->randomNumber(2),
+            'created_at' => $this->faker->dateTimeThisYear(),
+            'updated_at' => $this->faker->dateTimeThisYear(),
         ];
     }
 }

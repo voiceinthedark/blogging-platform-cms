@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +19,13 @@ class UserProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'user_id' => User::factory()->create()->id,
+            'username' => $this->faker->userName(),
             'bio' => $this->faker->paragraph(5),
+            // 'profile_photo_path' => $this->faker->image('app/public/profile-photos', 256, 256, 'animals', false),
+            'twitter' => $this->faker->userName(),
+            'facebook' => $this->faker->userName(),
+            'instagram' => $this->faker->userName(),
+            'github' => $this->faker->userName(),
         ];
     }
 }
