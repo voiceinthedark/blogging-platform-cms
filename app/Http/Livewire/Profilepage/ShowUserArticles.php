@@ -4,9 +4,13 @@ namespace App\Http\Livewire\Profilepage;
 
 use App\Models\Post;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ShowUserArticles extends Component
 {
+
+    use WithPagination;
+
     public $user;
     protected $posts;
     public $search;

@@ -84,7 +84,7 @@
 
     <div class="w-full flex flex-col justify-center items-center">
         <div class="flex flex-col w-[80%] mx-auto justify-center items-center bg-white mt-4 px-5 py-4 shadow-lg shadow-gray-300">
-            <div class="text-7xl text-center font-bold mt-8">{{ $post->title }}</div>
+            <div class="mb-10 tracking-tighter text-5xl text-center font-bold mt-8 w-96">{{ $post->title }}</div>
             <div class="flex flex-row justify-between">
                 <div class="w-6/12 mr-2">
                     @foreach ( $post->tags as $tag)
@@ -105,11 +105,11 @@
                 </div>
             </div>
             <div class="flex mt-8 w-full justify-evenly">
-                    <span>{{ $post->user->name }}</span>
+                    <a href="{{ route('profilepage.show', $post->user->userprofile->username) }}"><span class="font-bold text-lg text-sky-900 hover:underline ">{{ $post->user->name }}</span></a>
                     <span>{{ $post->created_at->diffForHumans() }}</span>
             </div>
             <div class="flex flex-col mt-9 pb-6">
-                <p>{!! $post->content !!}</p>
+                <article class="prose lg:prose-xl indent-8 prose-headings:underline prose-a:text-blue-600 hover:prose-a:text-blue-400 first-letter:text-7xl first-letter:font-bold first-letter:float-left first-letter:mr-3 first-line:uppercase">{!! $post->content !!}</article>
             </div>
         </div>
         <!-- Comments section -->

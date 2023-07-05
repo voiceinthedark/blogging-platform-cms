@@ -1,8 +1,8 @@
 <div class="grid grid-cols-3 break-after-avoid-page my-3 mx-3 h-screen">
     <div class="flex flex-col justify-start items-start mx-6">
-        <img class="rounded-full w-[250px] h-[250px]" src="{{ url($user->userprofile->profile_photo_url) }}" />
+        <img class="object-cover rounded-full w-[250px] h-[250px]" src="{{ url($user->userprofile->profile_photo_url) }}" />
         <div class="text-2xl">{{ $user->name }}</div>
-        <div class="text-lg">{{ '@' . $user->userprofile->username }}</div>
+        <div class="text-lg mb-5">{{ '@' . $user->userprofile->username }}</div>
         <div class="flex items-center">
             <img src="{{ asset('storage/logo/icons8-twitter.svg') }}" class="h-8 w-8" alt="twitter-icon" />
             <span class="text-lg">{{ $user->userProfile->twitter }}</span>
