@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Profile;
+namespace App\Http\Livewire\Profilepage;
 
 use App\Models\Post;
 use Livewire\Component;
@@ -23,7 +23,7 @@ class ShowUserArticles extends Component
 
     public function render()
     {
-        return view('livewire.profile.show-user-articles', [
+        return view('livewire.profilepage.show-user-articles', [
             'user' => $this->user,
             'posts' => Post::where('user_id', $this->user->id)->where('title', 'like', '%' . $this->search . '%')->orderBy('created_at', 'desc')->paginate(5),
 

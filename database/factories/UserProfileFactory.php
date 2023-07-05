@@ -19,13 +19,13 @@ class UserProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            'username' => $this->faker->userName(),
+            'username' => Str::snake($this->faker->firstName() . $this->faker->lastName()),
             'bio' => $this->faker->paragraph(5),
             // 'profile_photo_path' => $this->faker->image('app/public/profile-photos', 256, 256, 'animals', false),
-            'twitter' => $this->faker->userName(),
-            'facebook' => $this->faker->userName(),
-            'instagram' => $this->faker->userName(),
-            'github' => $this->faker->userName(),
+            'twitter' => Str::snake($this->faker->firstName() . $this->faker->lastName()),
+            'facebook' => Str::snake($this->faker->firstName() . $this->faker->lastName()),
+            'instagram' => Str::snake($this->faker->firstName() . $this->faker->lastName()),
+            'github' => Str::snake($this->faker->firstName() . $this->faker->lastName()),
         ];
     }
 }

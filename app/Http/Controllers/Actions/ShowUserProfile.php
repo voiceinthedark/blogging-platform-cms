@@ -16,7 +16,7 @@ class ShowUserProfile extends Controller
     {
         $userProfile = UserProfile::where('username', $username)->firstOrFail();
         $user = $userProfile->user;
-        return view('profile.showuser', [
+        return view('livewire.profile.showuser', [
             'user' => $user,
         ]);
     }

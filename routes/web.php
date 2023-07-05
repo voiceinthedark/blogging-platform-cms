@@ -25,8 +25,8 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('post/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+Route::get('profile/show/{username}', ShowUserProfile::class)->name('profilepage.show');
 
-Route::get('profile/show/{user:username}', ShowUserProfile::class)->name('profile.showuser');
 
 Route::middleware([
     'auth:sanctum',

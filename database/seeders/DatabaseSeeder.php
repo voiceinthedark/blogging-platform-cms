@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
                 ]);
 
                 $user->roles()->attach(Role::where('name', 'user')->first());
-                Post::factory(rand(1, 5))->create([
+                Post::factory(rand(1, 10))->create([
                     'user_id' => $user->id
                 ])->each(function ($post) use ($user) {
                     $tags = Tag::all();

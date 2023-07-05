@@ -20,7 +20,7 @@
     <!-- Get User's Posts -->
     <div class="flex flex-col items-start px-4 py-5 bg-white dark:bg-gray-900 sm:p-6">
         @foreach ($posts as $post)
-        <div class="w-full bg-white dark:bg-gray-900 flex flex-col">
+        <div wire:key="post-{{ $post->id }}" class="w-full bg-white dark:bg-gray-900 flex flex-col">
             <a href="{{ route('posts.show', $post->slug) }}" class=" text-gray-950 hover:text-gray-800 transition-colors">
                 <span class="font-bold text-ellipsis">{{ $post->title }}</span>
             </a>

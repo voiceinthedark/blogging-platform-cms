@@ -93,5 +93,10 @@ class User extends Authenticatable
         return $this->hasOne(Post::class)->oldestOfMany();
     }
 
+    // Latest comments
+    public function latestComments(): HasOne{
+        return $this->hasOne(Comment::class)->latestOfMany();
+    }
+
 
 }
