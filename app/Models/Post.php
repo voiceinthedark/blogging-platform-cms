@@ -18,9 +18,6 @@ class Post extends Model
         'content',
         'excerpt',
         'slug',
-        'views',
-        'likes',
-        'dislikes',
     ];
 
     // Relationship to user

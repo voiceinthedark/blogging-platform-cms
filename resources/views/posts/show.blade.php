@@ -30,6 +30,14 @@
             <div class="flex flex-col mt-9 pb-6">
                 <article class="prose lg:prose-xl indent-8 prose-headings:underline prose-a:text-blue-600 hover:prose-a:text-blue-400 first-letter:text-7xl first-letter:font-bold first-letter:float-left first-letter:mr-3 first-line:uppercase">{!! $post->content !!}</article>
             </div>
+            <!-- Likes and Dislikes section -->
+            <div class="mt-8 self-end">
+                <livewire:post.like-form />
+            </div>
+            <!-- About the Author and QR code section -->
+            <div>
+
+            </div>
         </div>
         <!-- Comments section -->
         <div class="mt-8 bg-white shadow rounded px-4 py-4 w-[50%]">
