@@ -55,14 +55,14 @@ class UpdateSocialInformation extends Component
     }
 
     public function rules(){
-        // $userId = $this->user->id;
+        $userId = $this->user->id;
 
         return [
             'username' => [
                 'required',
                 'min:5',
                 'max:15',
-                // Rule::unique('user_profiles')->ignore($userId)->when(function () {
+                // Rule::unique('user_profiles')->ignore($userId, 'user_id')->when(function () {
                 //     // Only apply the uniqueness rule when the 'username' field has been modified
                 //     // $modifiedFields = $this->user->getDirty();
                 //     // return array_key_exists('username', $modifiedFields);
