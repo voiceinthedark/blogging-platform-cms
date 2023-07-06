@@ -62,6 +62,18 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+
+    // Current user liked a post?
+    public function liked(Post|Comment $post): bool{
+        return PostLike::where('user_id', $this->id)->where('post_id', $post->id)->exists();
+    }
+
+    // Current user disliked a post?
+    public function disliked(Post|Comment $post): bool{
+        return PostLike::where('user_id', $this->id)->where('post_id', $post->id)->exists();
+    }
+
+
     // Relationship to user profile
     public function userProfile(): HasOne{
         return $this->hasOne(UserProfile::class);
@@ -96,6 +108,10 @@ class User extends Authenticatable
     // Latest comments
     public function latestComments(): HasOne{
         return $this->hasOne(Comment::class)->latestOfMany();
+    }
+
+    public function likes(): HasMany{
+        return $this->hasMany(PostLike::class);
     }
 
 

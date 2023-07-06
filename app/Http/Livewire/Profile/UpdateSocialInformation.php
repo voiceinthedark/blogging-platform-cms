@@ -62,12 +62,7 @@ class UpdateSocialInformation extends Component
                 'required',
                 'min:5',
                 'max:15',
-                // Rule::unique('user_profiles')->ignore($userId, 'user_id')->when(function () {
-                //     // Only apply the uniqueness rule when the 'username' field has been modified
-                //     // $modifiedFields = $this->user->getDirty();
-                //     // return array_key_exists('username', $modifiedFields);
-                //     return $this->user->isDirty('username');
-                // }),
+                Rule::unique('user_profiles')->ignore($userId, 'user_id'),
             ],
             'bio' => 'nullable|string',
             'twitter' => ['nullable', 'max:25', 'string'],

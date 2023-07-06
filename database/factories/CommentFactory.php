@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +18,11 @@ class CommentFactory extends Factory
      */
     public function definition(): array
     {
+        $maxusers = User::count();
+        $maxposts = Post::count();
         return [
-            'user_id' => rand(1, 100),
-            'post_id' => rand(1, 300),
+            'user_id' => rand(1, $maxusers),
+            'post_id' => rand(1, $maxposts),
             'content' => $this->faker->text(200),
             'parent_id' => null,
             'created_at' => $this->faker->dateTimeThisYear(),

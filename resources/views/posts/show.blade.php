@@ -32,7 +32,7 @@
             </div>
             <!-- Likes and Dislikes section -->
             <div class="mt-8 self-end">
-                <livewire:post.like-form />
+                <livewire:post.like-form :post="$post" />
             </div>
             <!-- About the Author and QR code section -->
             <div>

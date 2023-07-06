@@ -49,4 +49,8 @@ class Comment extends Model
         return $query->whereNull('parent_id');
     }
 
+    public function likes() : HasMany{
+        return $this->hasMany(CommentLike::class);
+    }
+
 }
