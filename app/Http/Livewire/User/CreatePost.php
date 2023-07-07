@@ -13,6 +13,9 @@ class CreatePost extends Component
 {
 
     //? Add listenener to Browser event?
+    protected $listeners = [
+        'getReadingTime' => 'getReadingTime',
+    ];
 
 
     protected $rules = [
@@ -35,6 +38,8 @@ class CreatePost extends Component
     public $categorySearch;
     public $tagCollection;
     public $categoryCollection;
+    public $wordCount;
+    public $timeToRead;
 
     //? Use the same code for editing as well? Mounting the Post Component??
 
@@ -46,6 +51,9 @@ class CreatePost extends Component
         $this->tagSearch = '';
         $this->categories = Category::all();
         $this->categorySearch = '';
+        $this->wordCount = 0;
+        $this->timeToRead = 0;
+
     }
 
     public function updated($propertyName)
@@ -74,10 +82,15 @@ class CreatePost extends Component
         // dd($value);
     }
 
+    public function getReadingTime($wordCount): void
+    {
+        $this->timeToRead = ceil($wordCount / 200);
+    }
+
     public function create()
     {
 
-        $this->validate();
+        // $this->validate();
 
         $post = Post::create([
             'user_id' => auth()->user()->id,
@@ -86,6 +99,8 @@ class CreatePost extends Component
             // TODO: Excerpt when getting full HTML output
             'excerpt' => Str::excerpt($this->content),
             'slug' => Str::slug($this->title),
+            'word_count' => $this->wordCount,
+            'minutes' => $this->timeToRead,
         ]);
 
 

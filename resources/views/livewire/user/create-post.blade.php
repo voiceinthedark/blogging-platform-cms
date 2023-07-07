@@ -14,6 +14,8 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('dataHandler', () => {
                 return {
+                    wordCount: @entangle('wordCount'),
+                    timeToRead: @entangle('timeToRead'),
                     openTag: false,
                     openCategory: false,
                     tags: [],
@@ -59,17 +61,29 @@
             })
         });
     </script>
-    <div class="flex flex-col justify-start items-center w-[90%]" wire:ignore>
+
+    <!-- Word Counter -->
+    <div class="flex flex-col justify-start items-start m-4 w-[10%]">
+        <div><span class="text-lg">Word Count: </span>
+            <span class="text-lg" x-text="wordCount"></span>
+        </div>
+        <div>
+            <span class="text-lg">Estimated time to read: </span>
+            <span x-text="timeToRead"></span>
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-start items-center w-[80%]" wire:ignore>
 
         <x-banner />
 
-        <div class="w-[71%] flex flex-col">
-            <x-input-error for="title" />
+        <div class="w-[80%] flex flex-col">
             <x-label for="title" value="Title" />
             <x-input id="title" type="text" wire:model="title" />
+            <x-input-error for="title" />
         </div>
         {{-- <div id="toolbar"></div> --}}
-        <div class="w-[71%] min-h-[500px] flex flex-col bg-white rounded-lg shadow-sm" id="quill-editor">
+        <div class="w-[80%] min-h-[500px] flex flex-col bg-white rounded-lg shadow-sm" id="quill-editor">
             @if (!empty($post))
                 <!-- parse the html -->
                 {!! $post->content !!}
@@ -198,7 +212,7 @@
     </div>
 
     <!-- Sidebar -->
-    <div class="mt-4 -ml-48 flex flex-col">
+    <div class="flex flex-col mt-4 ml-4 w-[20%]">
         <span class="text-xl">Tags</span>
         <hr class="border-gray-300">
         <!-- Tags Selection -->
@@ -222,12 +236,6 @@
         const toolbarOptions = [
             ['bold', 'italic', 'underline', 'strike'],
             ['blockquote', 'code-block'],
-
-            [{
-                'header': 1
-            }, {
-                'header': 2
-            }],
             [{
                 'list': 'ordered'
             }, {
@@ -238,11 +246,7 @@
             }, {
                 'script': 'super'
             }],
-            [{
-                'indent': '-1'
-            }, {
-                'indent': '+1'
-            }],
+
             [{
                 'direction': 'rtl'
             }],
@@ -280,6 +284,12 @@
         quill.on('text-change', function() {
             let value = document.getElementById('quill-editor').innerHTML;
             @this.set('content', value);
+            // Get the text from the editor and split it into an array by words
+            // then send it to livewire component CreatePost and entangle the value of wordCount with Alpinejs
+            let text = document.getElementById('quill-editor').innerText;
+            let words = text.trim().split(/[\r\n\s]+/);
+            @this.set('wordCount', words.length);
+            Livewire.emit('getReadingTime', words.length);
         });
     </script>
 </div>

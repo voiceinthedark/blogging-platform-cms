@@ -19,6 +19,8 @@ class Post extends Model
         'content',
         'excerpt',
         'slug',
+        'word_count',
+        'minutes',
     ];
 
     // Relationship to user
@@ -47,25 +49,47 @@ class Post extends Model
 
     // Relationship tp Post_likes
 
-    public function likes(): HasMany{
+    public function likes(): HasMany
+    {
         return $this->hasMany(PostLike::class);
     }
 
-    public function likesCount(){
-        return $this->likes()->where('like_status',1)->count();
+    /**
+     * Returns the count of likes with a like status of 1.
+     *
+     * @return int The count of likes.
+     */
+    public function likesCount()
+    {
+        // Use the likes() method to get the likes relationship and filter it by like status of 1.
+        // Then, use the count() method to get the count of likes.
+        return $this->likes()->where('like_status', 1)->count();
     }
 
-    public function dislikesCount(){
+    public function dislikesCount()
+    {
         return $this->likes()->where('like_status', -1)->count();
     }
 
+    /**
+     * Get the positive likes associated with the post.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function positiveLikes(): HasMany
     {
+        // Retrieve the post likes that have a like_status of 1
         return $this->hasMany(PostLike::class)->where('like_status', 1);
     }
 
+    /**
+     * Get the negative likes for this post.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function negativeLikes(): HasMany
     {
+        // Return the PostLike records where the like status is -1.
         return $this->hasMany(PostLike::class)->where('like_status', -1);
     }
 }

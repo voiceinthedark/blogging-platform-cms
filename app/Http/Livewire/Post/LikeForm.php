@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class LikeForm extends Component
 {
+
     public $likes;
     public $dislikes;
     public $post;
@@ -41,6 +42,10 @@ class LikeForm extends Component
                 'like_status' => $likeStatus,
             ]);
         }
+        $this->likes = $this->post->likesCount();
+        $this->dislikes = $this->post->dislikesCount();
+
+        $this->emit('refreshLikes');
     }
 
     public function render()
