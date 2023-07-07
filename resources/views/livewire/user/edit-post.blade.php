@@ -1,4 +1,4 @@
-<div class="flex flex-row justify-start" x-data="dataHandler({{$post->tags}}, {{$post->categories}})" x-init=" /* Watch the tags array if it changes console it */
+<div class="flex flex-row justify-start" x-data="dataHandler({{ $post->tags }}, {{ $post->categories }})" x-init=" /* Watch the tags array if it changes console it */
  $watch('tags', () => {
      console.log(tags.toString());
      console.log($wire.tagCollection)
@@ -19,17 +19,19 @@
                 let categorySlug = [];
                 let tagObjIds = [];
                 let categoryObjIds = [];
-                for(let i = 0; i < tags.length; i++) {
+                for (let i = 0; i < tags.length; i++) {
                     tagSlug[i] = tags[i].slug;
                     tagObjIds[i] = tags[i].id;
                 }
-                for(let i = 0; i < categories.length; i++) {
+                for (let i = 0; i < categories.length; i++) {
                     categorySlug[i] = categories[i].slug;
                     categoryObjIds[i] = categories[i].id;
                 }
 
                 console.log(tags, categories);
                 return {
+                    wordCount: @entangle('wordCount'),
+                    timeToRead: @entangle('timeToRead'),
                     openTag: false,
                     openCategory: false,
                     tags: tagSlug,
@@ -75,7 +77,20 @@
             })
         });
     </script>
+    <!-- Word Counter -->
+    <div class="flex flex-col justify-start items-start m-4 w-[10%]">
+        <div><span class="text-lg">Word Count: </span>
+            <span class="text-lg" x-text="wordCount"></span>
+        </div>
+        <div>
+            <span class="text-lg">Estimated time to read: </span>
+            <span x-text="timeToRead"></span>
+        </div>
+    </div>
     <div class="flex flex-col justify-start items-center w-[90%]" wire:ignore>
+
+
+
 
         <x-banner />
 
@@ -108,7 +123,8 @@
                             </path>
                         </svg></button>
                     <!-- Dropdown menu -->
-                    <div id="dropdownTagSearch" class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md bg-white shadow-lg"
+                    <div id="dropdownTagSearch"
+                        class="absolute left-0 bottom-14 z-10 mt-2 w-56 rounded-md bg-white shadow-lg"
                         style="display: none;" x-show="openTag" x-on:click.outside="close('tag')">
                         <div class="p-3">
                             <label for="input-tag-search" class="sr-only">Search</label>
@@ -164,8 +180,8 @@
                         </svg></button>
                     <!-- Dropdown menu -->
                     <div id="dropdownCategorySearch"
-                        class="absolute bg-white left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg" style="display: none;"
-                        x-show="openCategory" x-on:click.outside="close('category')">
+                        class="absolute bg-white left-0 bottom-14 z-10 mt-2 w-56 rounded-md shadow-lg"
+                        style="display: none;" x-show="openCategory" x-on:click.outside="close('category')">
                         <div class="p-3">
                             <label for="input-category-search" class="sr-only">Search</label>
                             <div class="relative">
@@ -298,6 +314,12 @@
         quill.on('text-change', function() {
             let value = document.getElementById('quill-editor').innerHTML;
             @this.set('content', value);
+            // Get the text from the editor and split it into an array by words
+            // then send it to livewire component CreatePost and entangle the value of wordCount with Alpinejs
+            let text = document.getElementById('quill-editor').innerText;
+            let words = text.trim().split(/[\r\n\s]+/);
+            @this.set('wordCount', words.length);
+            Livewire.emit('getReadingTime', words.length);
         });
     </script>
 </div>

@@ -90,7 +90,7 @@ class CreatePost extends Component
     public function create()
     {
 
-        // $this->validate();
+        $this->validate();
 
         $post = Post::create([
             'user_id' => auth()->user()->id,

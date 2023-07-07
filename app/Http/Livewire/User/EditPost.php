@@ -34,8 +34,13 @@ class EditPost extends Component
     public $categorySearch;
     public $tagCollection;
     public $categoryCollection;
+    public $wordCount;
+    public $timeToRead;
 
     //? Use the same code for editing as well? Mounting the Post Component??
+    protected $listeners = [
+        'getReadingTime' => 'getReadingTime',
+    ];
 
     public function mount($post)
     {
@@ -48,6 +53,8 @@ class EditPost extends Component
         $this->categoryCollection = $this->post->categories;
         $this->categorySearch = '';
         $this->categories = Category::all();
+        $this->wordCount = $this->post->word_count;
+        $this->timeToRead = $this->post->minutes;
     }
 
     public function updated($propertyName)
@@ -76,6 +83,11 @@ class EditPost extends Component
         // dd($value);
     }
 
+    public function getReadingTime($wordCount): void
+    {
+        $this->timeToRead = ceil($wordCount / 200);
+    }
+
     public function update()
     {
 
@@ -88,7 +100,8 @@ class EditPost extends Component
             'content' => $this->content,
             'excerpt' => Str::excerpt($this->content),
             'slug' => Str::slug($this->title),
-
+            'word_count' => $this->wordCount,
+            'minutes' => $this->timeToRead,
         ]);
 
         $post->tags()->sync($this->tagCollection);
