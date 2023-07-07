@@ -58,4 +58,14 @@ class Post extends Model
     public function dislikesCount(){
         return $this->likes()->where('like_status', -1)->count();
     }
+
+    public function positiveLikes(): HasMany
+    {
+        return $this->hasMany(PostLike::class)->where('like_status', 1);
+    }
+
+    public function negativeLikes(): HasMany
+    {
+        return $this->hasMany(PostLike::class)->where('like_status', -1);
+    }
 }
