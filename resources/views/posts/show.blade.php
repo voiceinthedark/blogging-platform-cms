@@ -27,6 +27,10 @@
                     <a href="{{ route('profilepage.show', $post->user->userprofile->username) }}"><span class="font-bold text-lg text-sky-900 hover:underline ">{{ $post->user->name }}</span></a>
                     <span>{{ $post->created_at->diffForHumans() }}</span>
             </div>
+            <div class="flex w-full justify-evenly">
+                <span class="text-sm">{{ $post->word_count }} words</span>
+                <span class="text-sm">{{ $post->minutes }} mins read</span>
+            </div>
             <div class="flex flex-col mt-9 pb-6">
                 <article class="prose lg:prose-xl indent-8 prose-headings:underline prose-a:text-blue-600 hover:prose-a:text-blue-400 first-letter:text-7xl first-letter:font-bold first-letter:float-left first-letter:mr-3 first-line:uppercase">{!! $post->content !!}</article>
             </div>

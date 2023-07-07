@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('slug');
             $table->unsignedInteger('word_count')->default(0)->nullable();
             $table->unsignedTinyInteger('minutes')->default(0)->nullable();
+            $table->unsignedInteger('views')->default(0)->nullable();
             $table->timestamps();
             $table->dateTime('published_at')->nullable();
             $table->softDeletes()->nullable();

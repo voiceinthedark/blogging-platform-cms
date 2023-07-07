@@ -233,6 +233,7 @@
     <!-- Add Quill Editor script -->
     <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script>
+
         const toolbarOptions = [
             ['bold', 'italic', 'underline', 'strike'],
             ['blockquote', 'code-block'],
@@ -275,6 +276,7 @@
             theme: 'snow',
             modules: {
                 toolbar: toolbarOptions,
+
             },
             placeholder: 'Type something...',
 
