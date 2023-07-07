@@ -19,11 +19,15 @@ class PostFactory extends Factory
     public function definition(): array
     {
         $title = $this->faker->sentence();
+        $content = $this->faker->paragraph(5);
+
         return [
             'title' => $title,
-            'content' => $this->faker->paragraph(5),
+            'content' => $content,
             'slug' => Str::slug($title),
             'excerpt' => $this->faker->paragraph(1),
+            'word_count' => Str::wordCount($content),
+            'minutes' => rand(1, 5),
             'created_at' => $this->faker->dateTimeThisYear(),
             'updated_at' => $this->faker->dateTimeThisYear(),
         ];

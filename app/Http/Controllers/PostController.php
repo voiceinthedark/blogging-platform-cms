@@ -43,6 +43,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $post->increment('views');
         return view('posts.show', [
             'post' => $post,
             'comments' => Comment::rootComments()->where('post_id', $post->id)->get(),
