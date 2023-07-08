@@ -17,15 +17,17 @@ class ShowComments extends Component
     public $comment;
     public $comments;
 
-    public function mount(Post $post){
+    public function mount(Post $post)
+    {
         $this->post = $post;
         $this->comment = '';
         $this->comments = Comment::rootComments()->where('post_id', $post->id)->get();
     }
 
-    public function storeComment(int $commentId = null){
+    public function storeComment(int $commentId = null)
+    {
         $this->validate([
-            'comment' => 'required'
+            'comment' => 'required|string|max:1024',
         ]);
 
         $this->post->comments()->create([
@@ -37,9 +39,15 @@ class ShowComments extends Component
         ]);
 
         $this->emitSelf('commentStored');
-        // $this->reset();
+        $this->resetfields();
 
         return response()->json([$this->post->comments->last()]);
+    }
+
+    public function resetfields()
+    {
+        $this->comment = '';
+        $this->comments = Comment::rootComments()->where('post_id', $this->post->id)->get();
     }
 
     public function render()

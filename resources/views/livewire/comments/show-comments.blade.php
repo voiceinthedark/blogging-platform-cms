@@ -14,10 +14,10 @@
     @endif
 
     @foreach ($comments as $comment)
-        <div x-data="{
+        <div key="comment-{{ $comment->id }}" id="comment-{{ $comment->id }}" x-data="{
             commentShow: false,
             replyShow: false,
-        }">
+            }">
             <div class="flex flex-row items-start">
                 <div class="mr-2">
                     <x-avatar md src="{{ url($comment->user->userprofile->profile_photo_url) }}" />
@@ -30,7 +30,7 @@
             <div class="p-4 bg-gray-100 m-2 text-secondary-800 border rounded border-l-slate-700">
                 {{ $comment->content }}
             </div>
-            <livewire:post.comment-like-form :comment="$comment" />
+            <livewire:post.comment-like-form :comment="$comment" key="comment-{{ $comment->id }}" />
 
             @auth
             <div class="flex flex-row justify-end">
@@ -45,7 +45,7 @@
                         x-text="replyShow ? 'hide ' + {{ count($comment->replies) }} + ' replies' : 'show ' + {{ count($comment->replies) }} + ' replies'"></button>
                 @endif
                 @foreach ($comment->replies as $reply)
-                    <div x-data="{ replyTo: false, user: '@' + '{{ $reply->user->name }}' }" x-show="replyShow" id="{{ $reply->id }}"
+                    <div key="reply-{{ $reply->id }}" id="reply-{{ $reply->id }}" x-data="{ replyTo: false, user: '@' + '{{ $reply->user->name }}' }" x-show="replyShow" id="{{ $reply->id }}"
                         x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
                         x-transition:leave="transition ease-in duration-300"

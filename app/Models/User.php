@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -119,5 +120,12 @@ class User extends Authenticatable
         return $this->hasMany(CommentLike::class);
     }
 
+    // *Following System
+    public function followers(): HasMany{
+        return $this->hasMany(User::class);
+    }
 
+    public function following(): BelongsToMany{
+        return $this->belongsToMany(User::class);
+    }
 }
