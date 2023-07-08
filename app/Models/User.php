@@ -121,11 +121,11 @@ class User extends Authenticatable
     }
 
     // *Following System
-    public function followers(): HasMany{
-        return $this->hasMany(User::class);
+    public function followers(): BelongsToMany{
+        return $this->belongsToMany(User::class, 'user_followers', 'followed_id', 'follower_id');
     }
 
     public function following(): BelongsToMany{
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user_followers', 'follower_id', 'followed_id');
     }
 }

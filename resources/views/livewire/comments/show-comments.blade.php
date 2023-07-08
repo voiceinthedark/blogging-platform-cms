@@ -27,13 +27,13 @@
                     <span class="text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
                 </div>
             </div>
-            <div class="p-4 bg-gray-100 m-2 text-secondary-800 border rounded border-l-slate-700">
+            <div class="p-4 bg-gray-100 m-2 text-secondary-800 border rounded border-l-slate-700 -mb-3">
                 {{ $comment->content }}
             </div>
             <livewire:post.comment-like-form :comment="$comment" key="comment-{{ $comment->id }}" />
 
             @auth
-            <div class="flex flex-row justify-end">
+            <div class="flex flex-row justify-end -mt-3">
                 <button class="text-blue-600" @click="commentShow = !commentShow">Reply</button>
             </div>
             @endauth
@@ -45,7 +45,7 @@
                         x-text="replyShow ? 'hide ' + {{ count($comment->replies) }} + ' replies' : 'show ' + {{ count($comment->replies) }} + ' replies'"></button>
                 @endif
                 @foreach ($comment->replies as $reply)
-                    <div key="reply-{{ $reply->id }}" id="reply-{{ $reply->id }}" x-data="{ replyTo: false, user: '@' + '{{ $reply->user->name }}' }" x-show="replyShow" id="{{ $reply->id }}"
+                    <div key="reply-{{ $reply->id }}" id="reply-{{ $reply->id }}" x-data="{ replyTo: false, user: '@' + '{{ $reply->user->userprofile->username }}' }" x-show="replyShow" id="{{ $reply->id }}"
                         x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
                         x-transition:leave="transition ease-in duration-300"
@@ -56,15 +56,16 @@
                                     <x-avatar md src="{{ url($reply->user->userprofile->profile_photo_url) }}" />
                                 </div>
                                 <div class="flex flex-col items-start">
-                                    <span class="font-bold">{{ $reply->user->name }}</span>
+                                    <span class="font-bold">{{ '@' . $reply->user->userprofile->username }}</span>
                                     <span class="text-gray-500">{{ $reply->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
-                            <div class="p-4 bg-gray-100 m-2 text-secondary-800 border rounded border-l-slate-700">
+                            <div class="p-4 bg-gray-100 m-2 text-secondary-800 border rounded border-l-slate-700 -mb-3">
                                 {{ $reply->content }}
                             </div>
+                            <livewire:post.comment-like-form :comment="$reply" key="reply-{{ $reply->id }}" />
 
-                            <div class="flex flex-row justify-end">
+                            <div class="flex flex-row justify-end -mt-4">
                                 <button type="button" class="text-blue-600" x-on:click="replyTo = !replyTo">
                                     Reply</button>
                             </div>
