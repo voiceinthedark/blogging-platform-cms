@@ -30,8 +30,9 @@
             <div class="p-4 bg-gray-100 m-2 text-secondary-800 border rounded border-l-slate-700">
                 {{ $comment->content }}
             </div>
-            @auth
+            <livewire:post.comment-like-form :comment="$comment" />
 
+            @auth
             <div class="flex flex-row justify-end">
                 <button class="text-blue-600" @click="commentShow = !commentShow">Reply</button>
             </div>

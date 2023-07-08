@@ -53,4 +53,20 @@ class Comment extends Model
         return $this->hasMany(CommentLike::class);
     }
 
+    public function likesCount() : int{
+        return $this->likes()->where('like_status', 1)->count();
+    }
+
+    public function dislikesCount() : int{
+        return $this->likes()->where('like_status', -1)->count();
+    }
+
+    public function positiveLikes() : HasMany{
+        return $this->hasMany(CommentLike::class)->where('like_status', 1);
+    }
+
+    public function negativeLikes() : HasMany{
+        return $this->hasMany(CommentLike::class)->where('like_status', -1);
+    }
+
 }
