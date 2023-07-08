@@ -10,7 +10,9 @@ use App\Models\Post;
 use App\Models\Role;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\UserFollower;
 use App\Models\UserProfile;
+use Database\Factories\FollowerFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -55,6 +57,23 @@ class DatabaseSeeder extends Seeder
 
         // Run the Comment factory
         Comment::factory(600)->create();
+
+        $usersCount = User::all()->count();
+
+        UserFollower::factory(1000)->create()
+        ->each(function ($follower) use ($usersCount) {
+            $follower->update([
+                'follower_id' => rand(1, $usersCount)
+            ]);
+
+            // Make sure the follower_id is not equal to following_id
+            while ($follower->follower_id === $follower->following_id) {
+                $follower->update([
+                    'followed_id' => rand(1, $usersCount)
+                ]);
+            }
+        });
+
 
 
     }

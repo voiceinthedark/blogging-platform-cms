@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('user_followers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('follower_id')->constrained('users'); // user who is following
-            $table->foreignId('followed_id')->constrained('users'); // user being followed
+            $table->foreignId('follower_id')->constrained('users', 'id'); // user who is following
+            $table->foreignId('followed_id')->constrained('users', 'id'); // user being followed
             $table->timestamps();
         });
     }
