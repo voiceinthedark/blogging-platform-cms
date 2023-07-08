@@ -54,10 +54,27 @@
             <div class="mt-8 self-end">
                 <livewire:post.like-form :post="$post" />
             </div>
+            <x-section-border />
             <!-- About the Author and QR code section -->
-            <div>
-
+            <div class="flex flex-row justify-evenly items-center">
+                <div class="grid grid-cols-2 mt-8 gap-1 w-[35%] self-start">
+                    <div class="row-span-2">
+                        <x-avatar size="w-36 h-36" src="{{  $post->user->userprofile->profile_path_url }}" />
+                    </div>
+                    <div>
+                        <span class="font-bold text-2xl">{{ $post->user->name }}</span>
+                        <span class="block text-sm text-gray-500">{{ $post->user->email }}</span>
+                    </div>
+                    <div>
+                        <span>{{ Str::words($post->user->userProfile->bio, 10) }}</span>
+                    </div>
+                </div>
+                <!-- Page QR Code -->
+                <div class="justify-self-end">
+                    {!! QrCode::generate(Request::url('/posts/' . $post->slug )) !!}
+                </div>
             </div>
+
         </div>
         <!-- Comments section -->
         <div class="mt-8 bg-white shadow rounded px-4 py-4 w-[50%]">
