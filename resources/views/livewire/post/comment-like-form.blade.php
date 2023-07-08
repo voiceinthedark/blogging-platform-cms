@@ -1,14 +1,10 @@
 <div class="flex flex-row justify-end px-6 py-4" x-data="{
     showLikePopover: false,
     showDislikePopover: false,
-    likeStatus: {{ auth()->user()?->likes->where('comment_id', $comment->id)->first()->like_status ?? 0}} ?? 0,
+    likeStatus: {{ auth()->user()?->likesComments->where('comment_id', $comment->id)->first()->like_status ?? 0}} ?? 0,
     }">
 
-    <style>
-        .active {
-            fill: #007bff;
-        }
-    </style>
+
 
 
     <!-- Like -->
@@ -16,7 +12,7 @@
         <button type="button" id="like" name="like"
             wire:click="updateLikeStatus({{ $comment->id }}, {{ auth()->user()?->id }}, 'like')"
             x-on:mouseover="showLikePopover = true" x-on:mouseout="showLikePopover = false"
-            x-on:click="likeStatus === 1 ? likeStatus = 0 : likeStatus == 0 ? likeStatus = 1 : likeStatus = 0"
+            x-on:click="likeStatus === 1 ? likeStatus = 0 : likeStatus === 0 ? likeStatus = 1 : likeStatus = 0"
             class="mr-4 hover:text-blue-700">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 x-bind:class="{ 'active': likeStatus === 1 }" stroke="currentColor" class="w-6 h-6">

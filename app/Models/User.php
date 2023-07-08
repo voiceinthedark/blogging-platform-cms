@@ -65,12 +65,12 @@ class User extends Authenticatable
 
     // Current user liked a post?
     public function liked(Post|Comment $post): bool{
-        return PostLike::where('user_id', $this->id)->where('post_id', $post->id)->exists();
-    }
-
-    // Current user disliked a post?
-    public function disliked(Post|Comment $post): bool{
-        return PostLike::where('user_id', $this->id)->where('post_id', $post->id)->exists();
+        // check typeof $post
+        if(typeOf($post) === Post::class){
+            return PostLike::where('user_id', $this->id)->where('post_id', $post->id)->exists();
+        } else{
+            return CommentLike::where('user_id', $this->id)->where('comment_id', $post->id)->exists();
+        }
     }
 
 
@@ -112,6 +112,11 @@ class User extends Authenticatable
 
     public function likes(): HasMany{
         return $this->hasMany(PostLike::class);
+    }
+
+    // likes comments
+    public function likesComments(): HasMany{
+        return $this->hasMany(CommentLike::class);
     }
 
 

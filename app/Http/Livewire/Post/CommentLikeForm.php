@@ -45,6 +45,7 @@ class CommentLikeForm extends Component
         $this->likes = $this->comment->likesCount();
         $this->dislikes = $this->comment->dislikesCount();
 
+        // TODO: Fix list populating in real time
         $this->emit('refreshLikes');
 
     }
