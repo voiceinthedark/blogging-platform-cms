@@ -9,7 +9,9 @@ class Show extends Component
 {
 
     protected $listeners = [
-        'followed' => '$refresh'
+        'followed' => '$refresh',
+        // Follow from outside of the component
+        'follow' => 'follow',
     ];
 
     public $user;
@@ -22,6 +24,8 @@ class Show extends Component
         $follower = User::find($follower_id);
         $following = User::find($followed_id);
 
+        // dd($follower, $following);
+
         if($follower_id === $followed_id){
             return;
         }
@@ -33,6 +37,7 @@ class Show extends Component
         }
 
         $this->emitSelf('followed');
+        // $this->emitTo('post-item', 'followed');
     }
 
 
