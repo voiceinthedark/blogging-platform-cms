@@ -7,6 +7,11 @@ use Livewire\Component;
 
 class Show extends Component
 {
+
+    protected $listeners = [
+        'followed' => '$refresh'
+    ];
+
     public $user;
 
     public function mount($user){
@@ -26,6 +31,8 @@ class Show extends Component
         } else{
             $follower->following()->attach($followed_id);
         }
+
+        $this->emitSelf('followed');
     }
 
 

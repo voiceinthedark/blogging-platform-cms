@@ -1,5 +1,5 @@
-<div class="grid grid-cols-3 break-after-avoid-page my-3 mx-3 h-screen">
-    <div class="flex flex-col justify-start items-start mx-6">
+<div class="flex flex-row my-3 mx-3 w-fit">
+    <div class="flex flex-col basis-1/4 justify-start order-1 items-start mx-6">
         <img class="object-cover rounded-full w-[250px] h-[250px]"
             src="{{ url($user->userprofile->profile_photo_url) }}" />
         <div class="text-2xl">{{ $user->name }}</div>
@@ -13,9 +13,11 @@
         </div>
         <!-- Followers listing -->
         <div class="flex flex-row items-center mb-2">
-            <span data-popover-target="popover-followers" class="font-light text-gray-700 mr-2">{{ $user->followers->count() }} followers</span>
+            <span data-popover-target="popover-followers"
+                class="font-light text-gray-700 mr-2">{{ $user->followers->count() }} followers</span>
             <span class="font-extralight text-gray-700">|</span>
-            <span data-popover-target="popover-following" class="font-light text-gray-700 ml-2">{{ $user->following->count() }} following</span>
+            <span data-popover-target="popover-following"
+                class="font-light text-gray-700 ml-2">{{ $user->following->count() }} following</span>
         </div>
         <!-- Follower popover -->
         <div data-popover id="popover-followers" role="tooltip"
@@ -76,7 +78,7 @@
             <a href="https://github.com/{{ $user->userProfile->github }}"><span
                     class="text-lg text-sky-700">{{ '@' . $user->userProfile->github }}</span></a>
         </div>
-        <div class="text-lg mt-5 p-4 shadow-sm rounded-sm border border-dashed border-gray-400 bg-gray-100">
+        <div class="text-lg mt-5 p-4 shadow-sm rounded-sm border border-dashed border-gray-400 bg-gray-200">
             {{ $user->userProfile->bio }}
         </div>
         <!-- User QR Code -->
@@ -84,14 +86,18 @@
             {!! QrCode::eye('circle')->size(125)->generate($user->email) !!}
         </div>
     </div>
-    <div class="flex flex-col justify-start items-center mx-4 mt-20">
+
+    <!-- Second column -->
+    <div class="flex flex-col basis-2/4 order-2 justify-center items-center mx-2 mt-20">
         <span
             class="text-2xl font-semibold mb-5">{{ $user->name . ' has ' . $user->posts->count() . ' articles' }}</span>
         <livewire:profilepage.show-user-articles :user="$user" :posts="$user->posts" />
     </div>
-</div>
-<div class="flex flex-col justify-start items-center mt-20">
-    <span
-        class="text-2xl font-semibold mb-5">{{ $user->name . ' has ' . $user->comments->count() . ' comments' }}</span>
-    <livewire:profilepage.show-user-comments :user="$user" />
+
+    <!-- Third column -->
+    <div class="flex flex-col basis-1/4 order-3 justify-center items-center mt-20">
+        <span
+            class="text-2xl font-semibold mb-5">{{ $user->name . ' has ' . $user->comments->count() . ' comments' }}</span>
+        <livewire:profilepage.show-user-comments :user="$user" />
+    </div>
 </div>

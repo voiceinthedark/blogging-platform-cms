@@ -10,6 +10,10 @@ class ShowUserComments extends Component
 {
     use WithPagination;
 
+    // protected $listeners = [
+    //     'followed' => '$refresh'
+    // ];
+
     public $user;
     protected $comments;
 
