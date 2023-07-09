@@ -40,7 +40,7 @@
     </div>
 
     <div x-show="showLikePopover" class="relative">
-        <div class=" absolute bottom-16 left-0 right-0 z-10 bg-white rounded-lg border h-fit w-fit p-4">
+        <div class=" absolute bottom-16 right-0 z-10 bg-white rounded-lg border h-fit w-fit p-4">
             <div class="flex flex-col items-center">
                 <!-- If mouse enter the likes button -->
                 @forelse ($comment->positiveLikes as $positiveLike)
@@ -58,7 +58,7 @@
 
     <!-- else if mouse enter the dislikes button -->
     <div x-show="showDislikePopover" class="relative">
-        <div class=" absolute bottom-16 left-0 right-0 z-10 bg-white rounded-lg border h-fit w-fit p-4">
+        <div class=" absolute bottom-16 right-0 z-10 bg-white rounded-lg border h-fit w-fit p-4">
             <div class="flex flex-col items-center">
                 <!-- If mouse enter the dislikes button -->
                 @forelse ($comment->negativeLikes as $negativeLike)

@@ -9,6 +9,10 @@ use Livewire\Component;
 class CommentLikeForm extends Component
 {
 
+    protected $listeners = [
+        'refreshLikes' => '$refresh'
+    ];
+
     public $likes;
     public $dislikes;
     public $comment;
@@ -46,7 +50,7 @@ class CommentLikeForm extends Component
         $this->dislikes = $this->comment->dislikesCount();
 
         // TODO: Fix list populating in real time
-        $this->emit('refreshLikes');
+        $this->emitSelf('refreshLikes');
 
     }
 
