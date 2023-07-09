@@ -36,7 +36,7 @@ class PostItem extends Component
             $follower->following()->attach($followed_id);
         }
 
-        // $this->emitSelf('followed');
+        $this->emitSelf('followed');
     }
 
 
