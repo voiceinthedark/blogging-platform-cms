@@ -19,7 +19,7 @@ class PostItem extends Component
     public $post;
     public function mount()
     {
-        // $this->post = Post::find($postId);
+
     }
 
     public function follow(int $follower_id, int $followed_id){

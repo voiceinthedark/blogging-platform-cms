@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\Actions\ShowUserProfile;
 use App\Http\Controllers\PostController;
-use App\Http\Livewire\ShowPosts;
-use App\Http\Livewire\User\CreatePost;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +30,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
-    ])->group(function () {
+])->group(function () {
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
     Route::post('/dashboard', [PostController::class, 'index']);

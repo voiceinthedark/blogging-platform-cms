@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'title',
@@ -91,5 +92,9 @@ class Post extends Model
     {
         // Return the PostLike records where the like status is -1.
         return $this->hasMany(PostLike::class)->where('like_status', -1);
+    }
+
+    public function searchableAs() : string{
+        return 'posts_index';
     }
 }
