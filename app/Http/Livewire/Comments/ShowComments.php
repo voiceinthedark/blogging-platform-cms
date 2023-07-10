@@ -5,9 +5,12 @@ namespace App\Http\Livewire\Comments;
 use App\Models\Comment;
 use App\Models\Post;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ShowComments extends Component
 {
+
+    use WithPagination;
 
     protected $listeners = [
         'commentStored' => '$refresh',
@@ -15,13 +18,13 @@ class ShowComments extends Component
 
     public $post;
     public $comment;
-    public $comments;
+    protected $comments;
 
     public function mount(Post $post)
     {
         $this->post = $post;
         $this->comment = '';
-        $this->comments = Comment::rootComments()->where('post_id', $post->id)->get();
+        $this->comments = Comment::rootComments()->where('post_id', $post->id)->orderBy('created_at', 'desc')->paginate(5);
     }
 
     public function storeComment(int $commentId = null)
@@ -47,13 +50,14 @@ class ShowComments extends Component
     public function resetfields()
     {
         $this->comment = '';
-        $this->comments = Comment::rootComments()->where('post_id', $this->post->id)->get();
+        $this->comments =
+        Comment::rootComments()->where('post_id', $this->post->id)->orderBy('created_at', 'desc')->paginate(5);
     }
 
     public function render()
     {
         return view('livewire.comments.show-comments', [
-            'comments' => Comment::rootComments()->where('post_id', $this->post->id)->get(),
+            'comments' => Comment::rootComments()->where('post_id', $this->post->id)->orderBy('created_at', 'desc')->paginate(5),
         ]);
     }
 }

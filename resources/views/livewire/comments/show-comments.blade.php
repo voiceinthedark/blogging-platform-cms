@@ -27,7 +27,7 @@
                     <span class="text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
                 </div>
             </div>
-            <div class="p-4 bg-gray-100 m-2 text-secondary-800 border rounded border-l-slate-700 -mb-3">
+            <div class="p-4 m-2 -mb-3 bg-gray-100 border rounded text-secondary-800 border-l-slate-700">
                 {{ $comment->content }}
             </div>
             <livewire:post.comment-like-form :comment="$comment" key="comment-{{ $comment->id }}" />
@@ -40,7 +40,7 @@
             <!-- If Comment has replies -->
             @if (!empty($comment->replies))
                 @if (count($comment->replies) > 0)
-                    <button type="button" class="mb-2 text-blue-600 hover:text-blue-400 transition-colors"
+                    <button type="button" class="mb-2 text-blue-600 transition-colors hover:text-blue-400"
                         x-on:click="replyShow = !replyShow"
                         x-text="replyShow ? 'hide ' + {{ count($comment->replies) }} + ' replies' : 'show ' + {{ count($comment->replies) }} + ' replies'"></button>
                 @endif
@@ -60,7 +60,7 @@
                                     <span class="text-gray-500">{{ $reply->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
-                            <div class="p-4 bg-gray-100 m-2 text-secondary-800 border rounded border-l-slate-700 -mb-3">
+                            <div class="p-4 m-2 -mb-3 bg-gray-100 border rounded text-secondary-800 border-l-slate-700">
                                 {{ $reply->content }}
                             </div>
                             <livewire:post.comment-like-form :comment="$reply" key="reply-{{ $reply->id }}" />
@@ -84,7 +84,7 @@
                     </div>
                 @endforeach
             @endif
-            <div class="mb-4 mt-2 ml-12" x-show="commentShow" wire:target="comment"
+            <div class="mt-2 mb-4 ml-12" x-show="commentShow" wire:target="comment"
                 x-transition:enter="transition ease-in duration-200" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-200" wire:ignore>
                 <x-textarea-wireui id="comment-{{ $comment->id }}" name="comment"
@@ -95,4 +95,6 @@
             </div>
         </div>
     @endforeach
+
+    {{ $comments->links() }}
 </div>
