@@ -24,7 +24,7 @@ class SearchBar extends Component
     public function search($value){
         $this->search = $value;
 
-        $this->results = Post::search($this->search)->paginate(5);
+        $this->results = Post::search($this->search)->get();
         $this->dispatchBrowserEvent('search', ['results' => $this->results]);
     }
 
