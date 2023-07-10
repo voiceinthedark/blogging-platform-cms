@@ -1,12 +1,12 @@
-<nav class="bg-white w-full" x-data="{ open: false }">
+<nav class="w-full bg-white" x-data="{ open: false }">
         <!-- Primary Navigation Menu -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <!-- Logo -->
-                    <div class="shrink-0 flex items-center">
+                    <div class="flex items-center shrink-0">
                         <a href="{{ route('welcome') }}">
-                            <x-application-mark class="block h-9 w-auto" />
+                            <x-application-mark class="block w-auto h-9" />
                         </a>
                     </div>
 
@@ -16,7 +16,8 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     </div>
-                    <div class="px-4 self-center">
+                    <!-- Search bar -->
+                    <div class="self-center px-4">
                         <label for="search-posts" class="sr-only">Search</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -55,7 +56,7 @@
                         <x-nav-link class="mr-3" href="{{ route('login') }}" :active="request()->routeIs('login')">
                             {{ __('Login') }}</x-nav-link>
                         <x-nav-link
-                            class="ml-3 self-center bg-blue-200 border border-gray-200 rounded-md focus:ring-4 focus:ring-blue-300"
+                            class="self-center ml-3 bg-blue-200 border border-gray-200 rounded-md focus:ring-4 focus:ring-blue-300"
                             href="{{ route('register') }}" :active="request()->routeIs('register')">
                             {{ __('Register') }}</x-nav-link>
                     </div>
@@ -63,10 +64,10 @@
 
 
                 <!-- Hamburger -->
-                <div class="-mr-2 flex items-center sm:hidden">
+                <div class="flex items-center -mr-2 sm:hidden">
                     <button @click="open = ! open"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
+                        <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16" />
