@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Actions\ShowUserProfile;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchController;
+use App\Http\Livewire\Search\SearchByType;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +38,6 @@ Route::middleware([
     Route::post('/dashboard', [PostController::class, 'index']);
 
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+
+    Route::get('/search/{type}', [SearchController::class, 'searchByType'])->name('search.type');
 });

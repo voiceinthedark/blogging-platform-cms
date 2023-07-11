@@ -4,10 +4,6 @@
 A Blogging Platform CMS using the Laravel TALL Stack.
 
 
-## Badges
-
-Add badges from somewhere like: [shields.io](https://shields.io/)
-
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
@@ -19,7 +15,7 @@ Add badges from somewhere like: [shields.io](https://shields.io/)
 
 - Complete CRUD system for Posts
 - Comments and replies on posts
--  Like systems for Posts and Comments
+- Like systems for Posts and Comments
 - Follower system, users can follow and unfollow other users.
 - User profile pages
 - Posts are indexed with Scout on Meilisearch, searching for posts is blazingly fast.
@@ -88,16 +84,16 @@ sail artisan migrate --seed
 ```
 
 ## Progress
-![Static Badge](https://img.shields.io/badge/Progress-75-%25?color=orange)
+![Static Badge](https://img.shields.io/badge/Progress-73-%25?color=orange)
 
 
 ## Roadmap
 
+- [x] Add Post notification
 - [ ] Refactor and improve post creation/editing view
 - [ ] Add Feed page
 - [ ] Add DM system
 - [ ] Add recommender system
-- [ ] Add Post notification
 
 
 ## Feedback

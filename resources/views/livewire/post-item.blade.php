@@ -58,6 +58,8 @@
         </div>
     </div>
 
+    @auth
+
     <!-- Author popover -->
     <div class="relative" id="post-{{ $post->id }}" key="post-{{ $post->id }}">
         <div id="popover-user-profile" role="tooltip" x-show="showPopover"
@@ -99,5 +101,6 @@
             </div>
         </div>
     </div>
+    @endauth
 
 </div>
