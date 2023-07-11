@@ -5,6 +5,7 @@ namespace App\Http\Livewire\User;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Notifications\PostCreated;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -115,6 +116,13 @@ class CreatePost extends Component
 
         session()->flash('flash.banner', 'Post Created');
         session()->flash('flash.bannerStyle', 'success');
+
+        // Notify followers of new post
+        $users = $post->user->followers;
+        // dump($users);
+        $users->each(function ($user) use ($post) {
+            $user->notify(new PostCreated($post));
+        });
 
         return redirect('/dashboard');
     }

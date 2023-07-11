@@ -87,14 +87,17 @@ sail artisan migrate --seed
 
 ```
 
+## Progress
+![Static Badge](https://img.shields.io/badge/Progress-75-%25?color=orange)
+
 
 ## Roadmap
 
 - [ ] Refactor and improve post creation/editing view
 - [ ] Add Feed page
+- [ ] Add DM system
 - [ ] Add recommender system
 - [ ] Add Post notification
-
 
 
 ## Feedback
