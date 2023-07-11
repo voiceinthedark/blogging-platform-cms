@@ -55,6 +55,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        // Enfore policy
+        $this->authorize('update', $post);
+
         return view('posts.edit', [
             'post' => $post,
         ]);
@@ -73,7 +76,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        // Enfore policy
+        $this->authorize('delete', $post);
     }
 
     // Get Latest Posts
