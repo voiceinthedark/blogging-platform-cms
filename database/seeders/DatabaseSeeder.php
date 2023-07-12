@@ -6,7 +6,9 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\CommentLike;
 use App\Models\Post;
+use App\Models\PostLike;
 use App\Models\Role;
 use App\Models\Tag;
 use App\Models\User;
@@ -60,6 +62,7 @@ class DatabaseSeeder extends Seeder
 
         $usersCount = User::all()->count();
 
+        // Run the Follower factory
         UserFollower::factory(1000)->create()
         ->each(function ($follower) use ($usersCount) {
             $follower->update([
@@ -74,7 +77,9 @@ class DatabaseSeeder extends Seeder
             }
         });
 
-
+        // Add Likes to Posts and Comments
+        PostLike::factory(10000)->create();
+        CommentLike::factory(10000)->create();
 
     }
 }

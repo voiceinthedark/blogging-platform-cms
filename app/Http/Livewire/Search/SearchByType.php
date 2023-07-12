@@ -31,7 +31,7 @@ class SearchByType extends Component
      * and where name is the tag or category slug
      */
     public function searchBy($name, $type){
-        dd($name, $type);
+        // dd($name, $type);
         if($type === 'tag'){
             $posts = Post::whereRelation('tags', 'slug', $name)->get();
         } else {

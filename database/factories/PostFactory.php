@@ -26,6 +26,7 @@ class PostFactory extends Factory
             'content' => $content,
             'slug' => Str::slug($title),
             'excerpt' => $this->faker->paragraph(1),
+            'views' => rand(10, 5000),
             'word_count' => Str::wordCount($content),
             'minutes' => rand(1, 5),
             'created_at' => $this->faker->dateTimeThisYear(),
