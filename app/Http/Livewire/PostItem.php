@@ -14,6 +14,7 @@ class PostItem extends Component
     protected $listeners = [
         'followed' => '$refresh',
         'follow' => 'follow',
+        'search' => 'searchType',
     ];
 
     public $post;
@@ -37,6 +38,12 @@ class PostItem extends Component
         }
 
         $this->emitSelf('followed');
+    }
+
+    public function searchType($name, $type){
+        // dd($name, $type);
+        $this->emitTo('search.search-by-type', 'search', ['name' => $name, 'type' => $type]);
+        // return redirect('/search/' . $type);
     }
 
 

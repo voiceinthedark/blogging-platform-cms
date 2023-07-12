@@ -3,9 +3,10 @@
     <div class="p-8 mb-8 border border-gray-200 rounded-lg bg-gray-50 md:p-12">
 
         <!-- Tags list -->
-        <div class="flex flex-row">
+        <div class="flex flex-row" x-data>
             @foreach ($post->tags as $tag)
-                <a href="#"
+                <a href="{{ route('search.type', 'tag', $tag->slug) }}"
+                {{-- x-on:click="$wire.emit('search', '{{ $tag->slug }}', 'tag')" --}}
                     class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md  mb-2 mx-2">
                     <x-icons.tag :name="$tag->slug" class="w-6 h-6 mx-2" />
                     {{ $tag->slug }}

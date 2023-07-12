@@ -84,7 +84,7 @@ sail artisan migrate --seed
 ```
 
 ## Progress
-![Static Badge](https://img.shields.io/badge/Progress-73-%25?color=orange)
+![Static Badge](https://img.shields.io/badge/Progress-77.5-%25?color=orange)
 
 
 ## Roadmap

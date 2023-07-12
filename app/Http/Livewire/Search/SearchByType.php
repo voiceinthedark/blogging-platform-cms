@@ -6,15 +6,20 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class SearchByType extends Component
 {
+    // use WithPagination;
 
-    protected $listeners = ['searchResult' => '$refresh'];
+    protected $listeners = [
+        'searchResult' => '$refresh',
+        'search' => 'searchBy',
+    ];
 
     public $items;
     public $type;
-    public $searchResult;
+    protected $searchResult;
 
     public function mount($items){
         $this->items = $items;
@@ -26,15 +31,13 @@ class SearchByType extends Component
      * and where name is the tag or category slug
      */
     public function searchBy($name, $type){
-        // $posts = Post::all();
+        dd($name, $type);
         if($type === 'tag'){
             $posts = Post::whereRelation('tags', 'slug', $name)->get();
         } else {
             $posts = Post::whereRelation('categories', 'slug', $name)->get();
         }
         $this->searchResult = $posts;
-        $this->emitSelf('searchResult');
-        // dd($posts);
     }
 
     public function render()

@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     public $items;
-    public function SearchByType($type)
+    public function SearchByType($type, $name = '')
     {
         $type === 'tag' ? $this->items = Tag::all() : $this->items = Category::all();
 
         return view('search.search-page', [
             'type' => $type,
             'items' => $this->items,
+            'name' => $name
         ]);
     }
 }
