@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Comment;
 use App\Models\User;
+use App\Utils\WeightedRandom;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +24,12 @@ class CommentLikeFactory extends Factory
         return [
             'user_id' => rand(1, $usersCount),
             'comment_id' => rand(1, $commentCount),
-            'like_status' => rand(-1, 1),
+            'like_status' =>
+            WeightedRandom::getRandomWeightedElement([
+                -1 => 25, // 15% chance to dislike
+                0 => 10, // 5% chance to abstain
+                1 => 65 // 80% chance to like
+            ]),
         ];
     }
 }
