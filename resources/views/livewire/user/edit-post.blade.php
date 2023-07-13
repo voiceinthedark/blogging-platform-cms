@@ -12,31 +12,34 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('dataHandler', (tags, categories) => {
-                console.log(tags, categories);
+                // console.log(tags, categories);
                 const tagsNames = tags.map(tag => tag.name);
                 const categoriesNames = categories.map(category => category.name);
 
                 return {
                     wordCount: @entangle('wordCount'),
                     timeToRead: @entangle('timeToRead'),
-                    tags: new Set(),
                     tagsArray: @entangle('tags'),
-                    categories: new Set(),
+                    tags: new Set(this.tagsArray),
                     categoriesArray: @entangle('categories'),
+                    categories: new Set(this.categoriesArray),
                     tagInput: tagsNames.join(' '),
                     categoryInput: categoriesNames.join(' '),
                     addTag() {
-                        console.log(this.tagInput);
+                        // console.log(this.tagInput);
                         // get the tagInput array and insert the tag into the Set
                         this.tagInput?.toLowerCase().trim().split(/\s+/g).forEach(tag => {
                             this.tags.add(tag);
                         });
                         this.tagsArray = Array.from(this.tags);
-                        console.log(this.tagsArray);
+                        // console.log(this.tagsArray);
                     },
                     removeTag(tag) {
+                        this.tags = new Set(this.tagsArray);
+                        // console.log(this.tags);
                         this.tags.delete(tag);
                         this.tagsArray = Array.from(this.tags);
+                        // console.log(this.tagsArray);
                     },
                     addCategory() {
                         this.categoryInput.toLowerCase().trim().split(/\s+/g).forEach(category => {
@@ -46,6 +49,7 @@
                         console.log(this.categoriesArray);
                     },
                     removeCategory(category) {
+                        this.categories = new Set(this.categoriesArray);
                         this.categories.delete(category);
                         this.categoriesArray = Array.from(this.categories);
                     },
@@ -67,8 +71,6 @@
         <div class="flex flex-col w-full space-y-2">
             <label for="editor" class="font-semibold text-gray-600">Content</label>
             <div id="editor" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
-                <!-- don't escape markdown -->
-                {{-- {{  Str::of($post->content) }} --}}
             </div>
         </div>
         <x-input-error for="editor" />
@@ -92,7 +94,7 @@
         <div class="flex flex-row gap-1">
             <template x-for="tag in tagsArray" :key="tag">
                 <button type="button" x-on:click="removeTag(tag)">
-                    <span name="tag" id="tag"
+                    <span name="tag" id="tag-{{ Str::uuid() }}"
                         class="p-1 text-xs font-semibold text-white bg-blue-500 rounded-lg bg-blend-lighten"
                         x-text="tag"></span>
                 </button>
