@@ -112,7 +112,7 @@ class CreatePost extends Component
         foreach ($this->tags as $tag) {
             $newTag = Tag::updateOrCreate(
                 ['name' => $tag],
-                ['name' => Str::camel($tag), 'slug' => $tag]
+                ['name' => $tag, 'slug' => $tag]
             );
             $this->tagsToCreate[] = $newTag->id;
         }
@@ -122,7 +122,7 @@ class CreatePost extends Component
         foreach ($this->categories as $category) {
             $newCategory = Category::updateOrCreate(
                 ['name' => $category],
-                ['name' => Str::camel($category), 'slug' => $category]
+                ['name' => $category, 'slug' => $category]
             );
             $this->categoriesToCreate[] = $newCategory->id;
         }

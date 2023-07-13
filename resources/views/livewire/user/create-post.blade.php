@@ -5,7 +5,7 @@
  });
  /* Watch the categories array if it changes console it */
  $watch('categoriesArray', () => {
-    console.log($wire.categories);
+     console.log($wire.categories);
      $wire.set('categories', categoriesArray);
  });" wire:ignore>
     <script>
@@ -74,9 +74,6 @@
                 <span class="text-sm">Estimated time to read: </span>
                 <span x-text="timeToRead"></span>
             </div>
-            <div class="mt-2">
-                <x-button type="submit" wire:click.prevent="create">Submit</x-button>
-            </div>
         </div>
     </div>
     <!-- Tags and categories input -->
@@ -110,6 +107,12 @@
         </div>
     </div>
 
+    <div class="flex justify-end w-[80%]">
+        <div class="mt-2">
+            <x-button type="submit" wire:click.prevent="create">Submit</x-button>
+        </div>
+    </div>
+
     <!-- Add ToastUI Editor script -->
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script>
@@ -134,7 +137,9 @@
             });
 
             // Loading data for editing
-
+            Livewire.on('updateEditorContent', function(content) {
+                editor.setMarkdown(content);
+            });
         });
     </script>
 </div>

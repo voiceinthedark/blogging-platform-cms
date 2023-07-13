@@ -17,8 +17,8 @@ class EditPost extends Component
     protected $rules = [
         'title' => ['required', 'max:255', 'string'],
         'content' => ['required', 'string'],
-        'tagCollection' => ['array'],
-        'categoryCollection' => ['array'],
+        'tags' => ['array'],
+        'categories' => ['array'],
     ];
 
     /**
@@ -29,13 +29,11 @@ class EditPost extends Component
     public $title;
     public $content;
     public $tags;
-    public $tagSearch;
     public $categories;
-    public $categorySearch;
-    public $tagCollection;
-    public $categoryCollection;
     public $wordCount;
     public $timeToRead;
+    public $tagsToCreate;
+    public $categoriesToCreate;
 
     //? Use the same code for editing as well? Mounting the Post Component??
     protected $listeners = [
@@ -47,35 +45,21 @@ class EditPost extends Component
         $this->post = $post;
         $this->title = $this->post->title ?? '';
         $this->content = $this->post->content ?? '';
-        $this->tagCollection = $this->post->tags;
-        $this->tagSearch = '';
-        $this->tags= Tag::all();
-        $this->categoryCollection = $this->post->categories;
-        $this->categorySearch = '';
-        $this->categories = Category::all();
+        $this->tags = $this->post->tags->map(function ($tag) {
+            return $tag->slug;
+        })->toArray();
+        $this->categories = $this->post->categories->map(function ($category) {
+            return $category->slug;
+        })->toArray();
         $this->wordCount = $this->post->word_count;
         $this->timeToRead = $this->post->minutes;
+        $this->tagsToCreate = [];
+        $this->categoriesToCreate = [];
     }
 
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
-    }
-
-    public function resetFields()
-    {
-        $this->title = '';
-        $this->content = '';
-    }
-
-    public function updatedTagSearch()
-    {
-        $this->tags = Tag::where('name', 'LIKE', '%' . $this->tagSearch . '%')->get();
-    }
-
-    public function updatedCategorySearch()
-    {
-        $this->categories = Category::where('name', 'LIKE', '%' . $this->categorySearch . '%')->get();
     }
 
     public function updatedContent($value): void
@@ -93,6 +77,8 @@ class EditPost extends Component
 
         $this->validate();
 
+        // dd($this->tags, $this->categories);
+
         $post = Post::find($this->post->id);
 
         $post->update([
@@ -104,8 +90,39 @@ class EditPost extends Component
             'minutes' => $this->timeToRead,
         ]);
 
-        $post->tags()->sync($this->tagCollection);
-        $post->categories()->sync($this->categoryCollection);
+        // Process Tags and convert objects to string
+        // $this->tags = array_map(function ($tag) {
+        //     if(!is_string($tag)) {
+        //         $tag = $tag->slug;
+        //     }
+        //     return $tag;
+        // }, $this->tags->toArray());
+
+        // dd($this->tags);
+
+        // Update the categories and tags
+        foreach ($this->tags as $tag) {
+            $newTag = Tag::updateOrCreate(
+                ['name' => $tag],
+                ['name' => $tag, 'slug' => $tag]
+            );
+            $this->tagsToCreate[] = $newTag->id;
+        }
+
+        // Process Categories
+        // update or create categories in db
+        foreach ($this->categories as $category) {
+            $newCategory = Category::updateOrCreate(
+                ['name' => $category],
+                ['name' => $category, 'slug' => $category]
+            );
+            $this->categoriesToCreate[] = $newCategory->id;
+        }
+
+        // dd($this->tagsToCreate, $this->categoriesToCreate);
+
+        $post->tags()->sync($this->tagsToCreate);
+        $post->categories()->sync($this->categoriesToCreate);
 
 
         session()->flash('flash.banner', 'Post Updated');
@@ -116,9 +133,10 @@ class EditPost extends Component
 
     public function render()
     {
+        // dd($this->tags, $this->categories);
         return view('livewire.user.edit-post', [
-            'tags' => $this->tagCollection,
-            'categories' => $this->categoryCollection,
+            'tags' => $this->tags,
+            'categories' => $this->categories,
         ]);
     }
 }
