@@ -11,12 +11,14 @@ x-on:keyup.escape="dropdownOpen = false"
     <div x-show="dropdownOpen" class="relative" x-on:click.outside="dropdownOpen = false"
     >
         <div
-            class="absolute left-0 z-20 w-[500px] rounded-lg shadow-lg shadow-slate-500 bg-white divide-y-2 divide-gray-400 divide-dotted">
+            class="absolute left-0 z-20 w-[500px] rounded-lg shadow-lg shadow-slate-500 bg-white divide-y-2 divide-gray-400 divide-dotted ">
             <template class="" x-for="(post, index) in paginatedResults" :key="index">
-                <div class="flex flex-col py-2">
-                    <div class="py-4 mx-2 mt-2 text-xs hover:bg-gray-200" x-text="post.title"></div>
-                    <div class="px-4 mx-2 text-xs" x-text="(post.content).substring(0, 20)"></div>
-                </div>
+                <button x-on:click="$wire.emit('show-post', post)" class="flex">
+                    <div class="flex flex-col py-2 hover:bg-gray-200">
+                        <div class="py-1 mx-2 mt-1 text-xs " x-text="post.title"></div>
+                        <div class="px-4 mx-2 text-xs" x-text="(post.excerpt).substring(0, 20)"></div>
+                    </div>
+                </button>
             </template>
             <div class="flex justify-start gap-2 mt-4 text-sm">
                 <button type="button" class="text-gray-500 hover:underline" x-on:click="currentPage = currentPage - 1" :disabled="currentPage === 1">Previous</button>

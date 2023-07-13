@@ -12,6 +12,7 @@ class SearchBar extends Component
 
     protected $listeners = [
         'searchValueChange' => 'search',
+        'show-post' => 'showPost',
     ];
 
     public $search;
@@ -26,6 +27,13 @@ class SearchBar extends Component
 
         $this->results = Post::search($this->search)->get();
         $this->dispatchBrowserEvent('search', ['results' => $this->results]);
+    }
+
+    public function showPost($postItem){
+        // dd($post);
+        $post = Post::find($postItem['id']);
+        return redirect(route('posts.show', $post->slug));
+
     }
 
     public function render()
