@@ -10,8 +10,7 @@
                     @foreach ($post->tags as $tag)
                         <a href="#"
                             class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md  mb-2 mx-2">
-                            <x-icons.tag :name="$tag->slug" class="w-6 h-6 mx-2" />
-                            {{ $tag->slug }}
+                            <span class="text-xs">{{ $tag->slug }}</span>
                         </a>
                     @endforeach
                 </div>

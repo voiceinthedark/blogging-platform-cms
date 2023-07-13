@@ -7,8 +7,4 @@
 
     {{ $posts->links() }}
 
-
-
-
-
 </div>

@@ -14,7 +14,7 @@
         </div>
     </header>
 
-    <div class="flex flex-row flex-2">
+    <div class="flex flex-row justify-center">
         <div>
             <livewire:show-posts :posts="$posts" />
         </div>

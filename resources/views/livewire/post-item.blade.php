@@ -1,22 +1,33 @@
-<div class="flex flex-col justify-center min-w-[1200px] py-8 px-4 mx-auto w-9/12 max-w-screen-xl lg:py-10"
+<div class="flex flex-col justify-center min-w-[500px] py-2 px-3 mx-auto w-full lg:py-2"
     x-data="{ showPopover: false, }">
-    <div class="p-8 mb-8 border border-gray-200 rounded-lg bg-gray-50 md:p-12">
+    <div class="p-2 mb-2 border border-gray-200 rounded-lg bg-gray-50 md:p-5">
 
-        <!-- Tags list -->
-        <div class="flex flex-row" x-data>
-            @foreach ($post->tags as $tag)
-                <a href="{{ route('search.type', 'tag', $tag->slug) }}"
-                {{-- x-on:click="$wire.emit('search', '{{ $tag->slug }}', 'tag')" --}}
-                    class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md  mb-2 mx-2">
-                    <x-icons.tag :name="$tag->slug" class="w-6 h-6 mx-2" />
-                    {{ $tag->slug }}
-                </a>
-            @endforeach
+        <div class="flex flex-row justify-between">
+            <!-- Tags list -->
+            <div class="flex flex-row" x-data>
+                @foreach ($post->tags as $tag)
+                    <a href="{{ route('search.type', 'tag', $tag->slug) }}"
+                    {{-- x-on:click="$wire.emit('search', '{{ $tag->slug }}', 'tag')" --}}
+                        class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md  mb-2 mx-2">
+                        <span class="text-xs">{{ $tag->slug }}</span>
+                    </a>
+                @endforeach
+            </div>
+            <!-- Categories list -->
+            <div class="flex flex-row">
+                @foreach ($post->categories as $category)
+                    <a href="{{ route('search.type', 'category', $category->slug) }}"
+                        class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md  mb-2 mx-2">
+                        <span class="text-xs">{{ $category->slug }}</span>
+                    </a>
+                @endforeach
+            </div>
         </div>
+
         <!-- Post title -->
-        <h1 class="mb-2 text-3xl font-extrabold text-gray-900 md:text-5xl">{{ $post->title }}</h1>
+        <div class="mb-2 text-xl font-extrabold text-gray-900 md:text-xl">{{ $post->title }}</div>
         <!-- Post excerpt -->
-        <p class="mb-6 text-lg font-normal text-gray-500">
+        <p class="mb-6 text-sm font-normal text-gray-500">
             {{ $post->excerpt }}
         </p>
         <div class="flex flex-row justify-between">
