@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 
 class CreatePost extends Component
 {
-
     //? Add listenener to Browser event?
     protected $listeners = [
         'getReadingTime' => 'getReadingTime',
@@ -20,10 +19,11 @@ class CreatePost extends Component
 
 
     protected $rules = [
-        'title' => ['required', 'max:255', 'string'],
+        'title' => ['required', 'max:255', 'min:10', 'string'],
         'content' => ['required', 'string'],
         'tags' => ['array'],
         'categories' => ['array'],
+        'description' => ['string', 'max:255'],
     ];
 
     /**
@@ -41,6 +41,7 @@ class CreatePost extends Component
     public $categoriesToCreate;
     public $wordCount;
     public $timeToRead;
+    public $description;
 
     //? Use the same code for editing as well? Mounting the Post Component??
 
@@ -56,17 +57,12 @@ class CreatePost extends Component
         $this->categoriesToCreate = [];
         $this->wordCount = 0;
         $this->timeToRead = 0;
+        $this->description = '';
     }
 
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
-    }
-
-    public function resetFields()
-    {
-        $this->title = '';
-        $this->content = '';
     }
 
     public function updatedContent($value): void
@@ -93,14 +89,13 @@ class CreatePost extends Component
     public function create()
     {
 
-        $this->validate();
+        $this->validate($this->rules);
 
         $post = Post::create([
             'user_id' => auth()->user()->id,
             'title' => $this->title,
             'content' => $this->content,
-            // TODO: Excerpt when getting full HTML output
-            'excerpt' => Str::excerpt($this->content),
+            'excerpt' => $this->description ?? Str::excerpt($this->content),
             'slug' => Str::slug($this->title),
             'word_count' => $this->wordCount,
             'minutes' => $this->timeToRead,

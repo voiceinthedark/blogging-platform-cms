@@ -52,12 +52,24 @@
 
         <x-banner />
 
+        <!-- Title -->
         <div class="flex flex-col w-full">
             <x-label for="title" value="Title" />
             <x-input id="title" type="text" wire:model="title" />
-            <x-input-error for="title" />
+            @error("title")
+                <span class="text-sm text-red-500">{{ $message }}</span>
+            @enderror
         </div>
 
+        <!-- description -->
+        <div class="flex flex-col w-full">
+            <x-textarea-wireui id="description" label="Description" hint="This will show up in the search results" wire:model="description" />
+            @error("description")
+                <span class="text-sm text-red-500">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <!-- Content -->
         <div class="flex flex-col w-full space-y-2">
             <label for="editor" class="font-semibold text-gray-600">Content</label>
             <div id="editor" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
