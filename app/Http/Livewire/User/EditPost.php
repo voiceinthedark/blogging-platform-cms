@@ -40,6 +40,8 @@ class EditPost extends Component
         'getReadingTime' => 'getReadingTime',
     ];
 
+
+
     public function mount($post)
     {
         $this->post = $post;
@@ -55,6 +57,12 @@ class EditPost extends Component
         $this->timeToRead = $this->post->minutes;
         $this->tagsToCreate = [];
         $this->categoriesToCreate = [];
+
+        $this->updateEditorContent();
+    }
+
+    public function updateEditorContent(){
+        $this->dispatchBrowserEvent('updateEditorContent', $this->content);
     }
 
     public function updated($propertyName)

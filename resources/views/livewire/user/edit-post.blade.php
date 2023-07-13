@@ -1,11 +1,11 @@
 <div class="flex flex-col items-center justify-center w-full" x-data="dataHandler({{ $post->tags }}, {{ $post->categories }})" x-init=" /* Watch the tags array if it changes console it */
  $watch('tagsArray', () => {
-    console.log(tagsArray);
+     console.log(tagsArray);
      $wire.set('tags', tagsArray);
  });
  /* Watch the categories array if it changes console it */
  $watch('categoriesArray', () => {
-    console.log(categoriesArray);
+     console.log(categoriesArray);
      $wire.set('categories', categoriesArray);
  });" wire:ignore>
 
@@ -67,7 +67,8 @@
         <div class="flex flex-col w-full space-y-2">
             <label for="editor" class="font-semibold text-gray-600">Content</label>
             <div id="editor" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
-                {!! $post->content !!}
+                <!-- don't escape markdown -->
+                {{-- {{  Str::of($post->content) }} --}}
             </div>
         </div>
         <x-input-error for="editor" />
@@ -139,14 +140,16 @@
                         let words = text.trim().split(/[\r\n\s]+/);
                         @this.set('wordCount', words.length);
                         Livewire.emit('getReadingTime', words.length);
-                    }
+                    },
+
                 }
             });
+            // console.log(content);
+            editor.setMarkdown(@this.get('content'));
 
-            // Loading data for editing
-            Livewire.on('updateEditorContent', function(content) {
-                editor.setMarkdown(content);
-            });
+
+
+
         });
     </script>
 </div>
