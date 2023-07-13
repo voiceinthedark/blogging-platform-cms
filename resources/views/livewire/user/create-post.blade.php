@@ -1,14 +1,12 @@
-<div class="flex flex-col items-center justify-center w-full"  x-data="dataHandler()" x-init=" /* Watch the tags array if it changes console it */
- $watch('tags', () => {
-     console.log(tags.toString());
-     console.log($wire.tagCollection)
-     $wire.set('tagCollection', tagsId);
+<div class="flex flex-col items-center justify-center w-full" x-data="dataHandler()" x-init=" /* Watch the tags array if it changes console it */
+ $watch('tagsArray', () => {
+     console.log($wire.tags)
+     $wire.set('tags', tagsArray);
  });
  /* Watch the categories array if it changes console it */
- $watch('categories', () => {
-     console.log(categories.toString());
-     console.log($wire.categoryCollection);
-     $wire.set('categoryCollection', categoriesId);
+ $watch('categoriesArray', () => {
+    console.log($wire.categories);
+     $wire.set('categories', categoriesArray);
  });" wire:ignore>
     <script>
         document.addEventListener('alpine:init', () => {
@@ -20,56 +18,30 @@
                     tagsArray: [],
                     tagInput: '',
                     categories: new Set(),
+                    categoriesArray: [],
+                    categoryInput: '',
                     addTag() {
                         // get the tagInput array and insert the tag into the Set
-                        this.tagInput.split(' ').forEach(tag => {
+                        this.tagInput.toLowerCase().trim().split(/\s+/g).forEach(tag => {
                             this.tags.add(tag);
                         });
-
                         this.tagsArray = Array.from(this.tags);
-
                         console.log(this.tagsArray);
-
                     },
                     removeTag(tag) {
-                        console.log(tag);
                         this.tags.delete(tag);
                         this.tagsArray = Array.from(this.tags);
                     },
-                    toggle(type) {
-                        switch (type) {
-                            case 'tag':
-                                this.openTag ? this.close('tag') : this.openTag = true;
-                                break;
-                            case 'category':
-                                this.openCategory ? this.close('category') : this.openCategory = true;
-                                break;
-                        }
+                    addCategory() {
+                        this.categoryInput.toLowerCase().trim().split(/\s+/g).forEach(category => {
+                            this.categories.add(category);
+                        });
+                        this.categoriesArray = Array.from(this.categories);
+                        console.log(this.categoriesArray);
                     },
-                    close(type) {
-                        switch (type) {
-                            case 'tag':
-                                this.openTag = false;
-                                break;
-                            case 'category':
-                                this.openCategory = false;
-                                break;
-                        }
-                    },
-                    // push checked tags to the array
-                    toggleCollection(tag, callingAction) {
-                        // if tag is not in the array, add it else remove it
-                        callingAction == 'tag' ? this.tags.includes(tag) ? this.tags.splice(this.tags
-                                .indexOf(tag), 1) : this.tags.push(tag) : this.categories.includes(tag) ?
-                            this.categories.splice(this.categories.indexOf(tag), 1) : this.categories.push(
-                                tag);
-                    },
-                    toggleCollectionId(tag, callingAction) {
-                        // if tag is not in the array, add it else remove it
-                        callingAction == 'tag' ? this.tagsId.includes(tag) ? this.tagsId.splice(this.tagsId
-                                .indexOf(tag), 1) : this.tagsId.push(tag) : this.categoriesId.includes(
-                                tag) ? this.categoriesId.splice(this.categoriesId.indexOf(tag), 1) : this
-                            .categoriesId.push(tag);
+                    removeCategory(category) {
+                        this.categories.delete(category);
+                        this.categoriesArray = Array.from(this.categories);
                     },
                 }
             })
@@ -109,15 +81,33 @@
     </div>
     <!-- Tags and categories input -->
     <div class="w-[80%] flex flex-col">
-        <x-input-wireui label='Tags' placeholder="input your tags" hint="Separate tags with spaces"
-        x-on:keydown.enter="addTag" x-model="tagInput"/>
+        <x-input-wireui label='Tags' placeholder="input your tags"
+            hint="Separate tags with spaces; you can click on a tag to remove it from the list"
+            x-on:keydown.enter="addTag" x-model="tagInput" />
         <div class="flex flex-row gap-1">
             <template x-for="tag in tagsArray" :key="tag">
                 <button type="button" x-on:click="removeTag(tag)">
-                    <span name="tag" id="tag" class="p-1 text-xs font-semibold text-white bg-blue-500 rounded-lg bg-blend-lighten" x-text="tag"></span></button>
+                    <span name="tag" id="tag"
+                        class="p-1 text-xs font-semibold text-white bg-blue-500 rounded-lg bg-blend-lighten"
+                        x-text="tag"></span>
+                </button>
             </template>
         </div>
+    </div>
 
+    <div class="w-[80%] flex flex-col">
+        <x-input-wireui label='Categories' placeholder="input your categories"
+            hint="Separate categories with spaces; you can click on a category to remove it from the list"
+            x-on:keydown.enter="addCategory" x-model="categoryInput" />
+        <div class="flex flex-row gap-1">
+            <template x-for="category in categoriesArray" :key="category">
+                <button type="button" x-on:click="removeCategory(category)">
+                    <span name="category" id="category"
+                        class="p-1 text-xs font-semibold text-white bg-blue-500 rounded-lg bg-blend-lighten"
+                        x-text="category"></span>
+                </button>
+            </template>
+        </div>
     </div>
 
     <!-- Add ToastUI Editor script -->

@@ -22,8 +22,8 @@ class CreatePost extends Component
     protected $rules = [
         'title' => ['required', 'max:255', 'string'],
         'content' => ['required', 'string'],
-        'tagCollection' => ['array'],
-        'categoryCollection' => ['array'],
+        'tags' => ['array'],
+        'categories' => ['array'],
     ];
 
     /**
@@ -33,12 +33,12 @@ class CreatePost extends Component
 
     public $title;
     public $content;
+    public $tagsDB;
+    public $categoriesDB;
     public $tags;
-    public $tagSearch;
     public $categories;
-    public $categorySearch;
-    public $tagCollection;
-    public $categoryCollection;
+    public $tagsToCreate;
+    public $categoriesToCreate;
     public $wordCount;
     public $timeToRead;
 
@@ -48,13 +48,14 @@ class CreatePost extends Component
     {
         $this->title =  '';
         $this->content =  '';
-        $this->tags = Tag::all();
-        $this->tagSearch = '';
-        $this->categories = Category::all();
-        $this->categorySearch = '';
+        $this->tagsDB = Tag::all();
+        $this->tags = [];
+        $this->categoriesDB = Category::all();
+        $this->categories = [];
+        $this->tagsToCreate = [];
+        $this->categoriesToCreate = [];
         $this->wordCount = 0;
         $this->timeToRead = 0;
-
     }
 
     public function updated($propertyName)
@@ -68,19 +69,20 @@ class CreatePost extends Component
         $this->content = '';
     }
 
-    public function updatedTagSearch()
-    {
-        $this->tags = Tag::where('name', 'LIKE', '%' . $this->tagSearch . '%')->get();
-    }
-
-    public function updatedCategorySearch()
-    {
-        $this->categories = Category::where('name', 'LIKE', '%' . $this->categorySearch . '%')->get();
-    }
-
     public function updatedContent($value): void
     {
         // dd($value);
+    }
+
+    public function updatedTags($value): void
+    {
+        $this->tags = $value;
+        // dump($this->tags);
+    }
+
+    public function updatedCategories($value): void{
+        $this->categories = $value;
+        // dump($this->categories);
     }
 
     public function getReadingTime($wordCount): void
@@ -104,14 +106,34 @@ class CreatePost extends Component
             'minutes' => $this->timeToRead,
         ]);
 
+        // Process Tags
+        // update or create tags in db
 
-        $post->tags()->attach($this->tagCollection);
-        $post->categories()->attach($this->categoryCollection);
+        foreach ($this->tags as $tag) {
+            $newTag = Tag::updateOrCreate(
+                ['name' => $tag],
+                ['name' => Str::camel($tag), 'slug' => $tag]
+            );
+            $this->tagsToCreate[] = $newTag->id;
+        }
+
+        // Process Categories
+        // update or create categories in db
+        foreach ($this->categories as $category) {
+            $newCategory = Category::updateOrCreate(
+                ['name' => $category],
+                ['name' => Str::camel($category), 'slug' => $category]
+            );
+            $this->categoriesToCreate[] = $newCategory->id;
+        }
+
+        $post->tags()->sync($this->tagsToCreate);
+        $post->categories()->sync($this->categoriesToCreate);
 
 
         $this->reset();
-        $this->tags = Tag::all();
-        $this->categories = Category::all();
+        $this->tagsDB = Tag::all();
+        $this->categoriesDB = Category::all();
         $this->emit('createPost');
 
         session()->flash('flash.banner', 'Post Created');
@@ -119,7 +141,6 @@ class CreatePost extends Component
 
         // Notify followers of new post
         $users = $post->user->followers;
-        // dump($users);
         $users->each(function ($user) use ($post) {
             $user->notify(new PostCreated($post));
         });
