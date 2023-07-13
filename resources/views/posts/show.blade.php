@@ -54,7 +54,7 @@
                             'inner_separator' => "\n",
                             'soft_break' => "\n",
                         ],
-                        'html_input' => 'strip',
+
                     ]) !!}</article>
             </div>
             <!-- Likes and Dislikes section -->

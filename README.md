@@ -90,7 +90,7 @@ sail artisan migrate --seed
 ## Roadmap
 
 - [x] Add Post notification
-- [ ] Refactor and improve post creation/editing view
+- [x] Refactor and improve post creation/editing view
 - [ ] Add Feed page
 - [ ] Add DM system
 - [ ] Add recommender system

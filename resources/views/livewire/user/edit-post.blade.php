@@ -136,14 +136,60 @@
     </div>
 
     <!-- Add ToastUI Editor script -->
+    <!-- Chart plugin -->
+    <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
+    <!-- Editor -->
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <!-- Editor's chart Plugin -->
+    <script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.min.js"></script>
+    <!-- Editor's syntax highlight Plugin -->
+    <script
+        src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js">
+    </script>
+    <!-- Color Picker -->
+    <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
+    <!-- Editor's color Syntax Plugin -->
+    <script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js">
+    </script>
+    <!-- Editor's table merged cell Plugin -->
+    <script
+        src="https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js">
+    </script>
+    <!-- Editor's UML Plugin -->
+    <script src="https://uicdn.toast.com/editor-plugin-uml/latest/toastui-editor-plugin-uml.min.js"></script>
+
     <script>
+        const {
+            Editor
+        } = toastui;
+        const {
+            chart,
+            codeSyntaxHighlight,
+            colorSyntax,
+            tableMergedCell,
+            uml,
+
+        } = Editor.plugin;
+
+        const chartOptions = {
+            minWidth: 100,
+            maxWidth: 600,
+            minHeight: 100,
+            maxHeight: 300
+        };
+
         document.addEventListener('livewire:load', function() {
             const editor = new toastui.Editor({
                 el: document.querySelector('#editor'),
                 height: '500px',
                 initialEditType: 'markdown',
                 // previewStyle: 'vertical',
+                plugins: [
+                    [chart, chartOptions],
+                    [codeSyntaxHighlight, {
+                        highlighter: Prism
+                    }], colorSyntax, tableMergedCell, uml
+                ],
                 events: {
                     change: function() {
                         let value = editor.getMarkdown();
