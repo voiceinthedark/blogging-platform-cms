@@ -146,10 +146,6 @@
             });
             // console.log(content);
             editor.setMarkdown(@this.get('content'));
-
-
-
-
         });
     </script>
 </div>

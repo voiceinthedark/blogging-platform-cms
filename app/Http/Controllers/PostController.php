@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -43,6 +44,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        // Str::of($post->content)->words(20);
         $post->increment('views');
         return view('posts.show', [
             'post' => $post,
