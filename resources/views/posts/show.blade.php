@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            {{ App\Utils\ContentBasedRecommender::SuggestPostsFor(auth()->user()->id) }}
+            {{-- {{ App\Utils\ContentBasedRecommender::SuggestPostsFor(auth()->user()->id) }} --}}
 
         </div>
         <!-- Comments section -->

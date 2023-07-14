@@ -18,10 +18,15 @@
                 </div>
                 <!-- Search bar -->
                 <livewire:search.search-bar />
-
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <!-- Feed -->
+                <div>
+                    <x-nav-link href="{{ route('users.feed', Auth::user()->userprofile->username) }}" :active="request()->routeIs('users.feed', Auth::user())">
+                        {{ __('Feed') }}
+                    </x-nav-link>
+                </div>
                 <!-- search dropdown -->
                 <div>
                     <x-dropdown>
@@ -54,6 +59,8 @@
 
                     </x-dropdown>
                 </div>
+
+
                 <!-- Create Post -->
                 <div>
                     <x-nav-link href="{{ route('posts.create') }}" :active="request()->routeIs('posts.create')">

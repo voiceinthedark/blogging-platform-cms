@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Actions\FeedController;
 use App\Http\Controllers\Actions\ShowUserProfile;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
@@ -40,4 +41,6 @@ Route::middleware([
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
 
     Route::get('/search/{type}', [SearchController::class, 'searchByType'])->name('search.type');
+
+    Route::get('users/feed/{user:username}', FeedController::class)->name('users.feed');
 });

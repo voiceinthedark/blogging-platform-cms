@@ -15,7 +15,10 @@ class ContentBasedRecommender
 
     public static function SuggestPostsFor($userId, $limit = 10)
     {
-        $user = User::find($userId);
+        // $user = User::find($userId); // Doesn't work
+        $user = auth()->user(); // works
+        // dd(auth()->user());
+        // dd($user->likes()->get()); // works
 
         $likes = $user->likes;
         // dd($likes);
@@ -38,7 +41,8 @@ class ContentBasedRecommender
         // sort tags by count
         arsort($tags);
         // Find posts where its tags relationship has most likes and count in the tags aray
-        $posts = DB::table('posts')->join('post_tag', 'posts.id', '=', 'post_tag.post_id')->select('posts.*')->whereIn('post_tag.tag_id', array_keys($tags))->get();
+        // $posts = DB::table('posts')->join('post_tag', 'posts.id', '=', 'post_tag.post_id')->select('posts.*')->whereIn('post_tag.tag_id', array_keys($tags))->get();
+        $posts = Post::join('post_tag', 'posts.id', '=', 'post_tag.post_id')->select('posts.*')->whereIn('post_tag.tag_id', array_keys($tags))->get();
         $tagsNames = [];
         foreach ($tags as $key => $tag) {
             $tagsNames[] = Tag::find($key)->name;
