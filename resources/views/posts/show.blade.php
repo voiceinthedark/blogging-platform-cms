@@ -81,6 +81,8 @@
                 </div>
             </div>
 
+            {{ App\Utils\ContentBasedRecommender::SuggestPostsFor(auth()->user()->id) }}
+
         </div>
         <!-- Comments section -->
         <div class="mt-8 bg-white shadow rounded px-4 py-4 w-[50%]">
