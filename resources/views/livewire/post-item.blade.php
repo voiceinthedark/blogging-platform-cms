@@ -75,7 +75,7 @@
     <!-- Author popover -->
     <div class="relative" id="post-{{ $post->id }}" key="post-{{ $post->id }}">
         <div id="popover-user-profile" role="tooltip" x-show="showPopover"
-            class="absolute right-0 z-10 w-64 text-sm text-gray-500 duration-300 bg-white border border-gray-200 rounded-lg shadow-sm bottom-32 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600">
+            class="absolute right-0 z-10 w-64 text-sm text-gray-500 duration-300 bg-white border border-gray-200 rounded-lg shadow-sm bottom-20 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600">
             <div class="p-3">
                 <div class="flex items-center justify-between mb-2">
                     <a href="#">

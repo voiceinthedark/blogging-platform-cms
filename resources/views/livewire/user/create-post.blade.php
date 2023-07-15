@@ -47,16 +47,26 @@
                         this.categoriesArray = Array.from(this.categories);
                     },
                     filterCategories() {
-                        if(this.categoryInput.length === 0){
+                        // if(this.categoryInput.length === 0) {
+                        //     this.filteredCategories = [];
+                        //     return;
+                        // }
+                        const searchValue = this.categoryInput.trim().split(' ').pop().toLowerCase();
+
+                        if (searchValue === '') {
                             this.filteredCategories = [];
                             return;
                         }
+
                         console.log(this.filteredCategories);
 
-                        const searchValue = this.categoryInput.toLowerCase();
                         this.filteredCategories = this.categoriesInit.filter(category => {
                             return category.toLowerCase().includes(searchValue);
                         });
+                    },
+                    selectCategory(category) {
+                        this.categoryInput = this.categoryInput.replace(/\S+$/, category + ' ');
+                        this.filteredCategories = [];
                     },
                 }
             })
@@ -123,18 +133,16 @@
     <div class="w-[80%] flex flex-col">
         <x-input-wireui label='Categories' placeholder="input your categories"
             hint="Separate categories with spaces; you can click on a category to remove it from the list"
-            x-on:keydown.enter="addCategory" x-model="categoryInput" x-on:input="filterCategories" x-ref="categoryInputRef" />
+            x-on:keydown.enter="addCategory" x-model="categoryInput" x-on:input="filterCategories"
+            x-ref="categoryInputRef" />
         <div class="relative z-10 bg-white" x-show="categoryInput.length > 0 && filteredCategories.length > 0" x-cloak
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            >
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
             <ul class="p-2">
                 <template x-for="category in filteredCategories" :key="category">
-                    <li class="text-sm font-light text-gray-500" x-on:click="categoryInput = category" x-on:click.away="$refs.categoryInputRef.focus()" x-text="category">
+                    <li class="text-sm font-light text-gray-500" x-on:click="selectCategory(category)"
+                        x-on:click.away="$refs.categoryInputRef.focus()" x-text="category">
                     </li>
                 </template>
             </ul>

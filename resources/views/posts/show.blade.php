@@ -65,7 +65,7 @@
             <div class="flex flex-row items-center justify-evenly">
                 <div class="grid grid-cols-2 mt-8 gap-1 w-[35%] self-start">
                     <div class="row-span-2">
-                        <x-avatar size="w-36 h-36" src="{{ $post->user->userprofile->profile_path_url }}" />
+                        <x-avatar size="w-36 h-36" src="{{ url($post->user->userprofile->profile_photo_url) }}" />
                     </div>
                     <div>
                         <span class="text-2xl font-bold">{{ $post->user->name }}</span>
@@ -80,8 +80,6 @@
                     {!! QrCode::generate(Request::url('/posts/' . $post->slug)) !!}
                 </div>
             </div>
-
-            {{-- {{ App\Utils\ContentBasedRecommender::SuggestPostsFor(auth()->user()->id) }} --}}
 
         </div>
         <!-- Comments section -->
