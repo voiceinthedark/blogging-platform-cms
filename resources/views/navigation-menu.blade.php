@@ -15,18 +15,16 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <!-- Feed -->
+                    <x-nav-link href="{{ route('users.feed', Auth::user()->userprofile->username) }}" :active="request()->routeIs('users.feed', Auth::user())">
+                        {{ __('Feed') }}
+                    </x-nav-link>
                 </div>
                 <!-- Search bar -->
                 <livewire:search.search-bar />
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <!-- Feed -->
-                <div>
-                    <x-nav-link href="{{ route('users.feed', Auth::user()->userprofile->username) }}" :active="request()->routeIs('users.feed', Auth::user())">
-                        {{ __('Feed') }}
-                    </x-nav-link>
-                </div>
                 <!-- search dropdown -->
                 <div>
                     <x-dropdown>
@@ -36,9 +34,8 @@
                                     class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50">
                                     refined search
 
-                                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                        stroke="currentColor">
+                                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                                     </svg>
@@ -48,11 +45,10 @@
 
                         <x-slot name="content">
                             <div class="flex flex-col items-start p-2 text-gray-600" x-data>
-                                <a  class="hover:bg-slate-200"
-                                href="{{route('search.type', 'tag')}}"
-                                    >Search
+                                <a class="hover:bg-slate-200" href="{{ route('search.type', 'tag') }}">Search
                                     by tag</a>
-                                <a href="{{route('search.type', 'category')}}" class="hover:bg-slate-200">Search by category</a>
+                                <a href="{{ route('search.type', 'category') }}" class="hover:bg-slate-200">Search by
+                                    category</a>
                             </div>
                         </x-slot>
 
@@ -78,8 +74,7 @@
                                         {{ Auth::user()->currentTeam->name }}
 
                                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                            stroke="currentColor">
+                                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                                         </svg>
@@ -95,8 +90,7 @@
                                     </div>
 
                                     <!-- Team Settings -->
-                                    <x-dropdown-link
-                                        href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
+                                    <x-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                         {{ __('Team Settings') }}
                                     </x-dropdown-link>
 
@@ -142,8 +136,7 @@
                                         {{ Auth::user()->name }}
 
                                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                            stroke="currentColor">
+                                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                         </svg>
@@ -191,9 +184,8 @@
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
+                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>

@@ -14,7 +14,6 @@ class PostsList extends Component
     public function mount(User $user){
         $this->user = $user;
         $this->posts = ContentBasedRecommender::SuggestPostsFor($this->user->id);
-        // dd($this->posts[0]->tags);
     }
 
     public function render()
