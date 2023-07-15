@@ -23,6 +23,7 @@
                     categoriesArray: [],
                     categoryInput: '',
                     filteredCategories: [],
+                    filteredTags: [],
                     addTag() {
                         // get the tagInput array and insert the tag into the Set
                         this.tagInput.toLowerCase().trim().split(/\s+/g).forEach(tag => {
@@ -67,6 +68,24 @@
                     selectCategory(category) {
                         this.categoryInput = this.categoryInput.replace(/\S+$/, category + ' ');
                         this.filteredCategories = [];
+                    },
+                    filterTags() {
+                        const searchValue = this.tagInput.trim().split(' ').pop().toLowerCase();
+
+                        if (searchValue === '') {
+                            this.filteredTags = [];
+                            return;
+                        }
+
+                        console.log(this.filteredTags);
+
+                        this.filteredTags = this.tagsInit.filter(tag => {
+                            return tag.toLowerCase().includes(searchValue);
+                        });
+                    },
+                    selectTag(tag) {
+                        this.tagInput = this.tagInput.replace(/\S+$/, tag + ' ');
+                        this.filteredTags = [];
                     },
                 }
             })
@@ -118,7 +137,20 @@
     <div class="w-[80%] flex flex-col">
         <x-input-wireui label='Tags' placeholder="input your tags"
             hint="Separate tags with spaces; you can click on a tag to remove it from the list"
-            x-on:keydown.enter="addTag" x-model="tagInput" />
+            x-on:keydown.enter="addTag" x-model="tagInput"
+            x-on:input="filterTags" x-ref="tagInputRef" />
+            <div class="relative z-10 bg-white" x-show="tagInput.length > 0 && filteredTags.length > 0" x-cloak
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <ul class="p-2">
+                <template x-for="tag in filteredTags" :key="tag">
+                    <li class="text-sm font-light text-gray-500" x-on:click="selectTag(tag)"
+                        x-on:click.away="$refs.tagInputRef.focus()" x-text="tag">
+                    </li>
+                </template>
+            </ul>
+        </div>
         <div class="flex flex-row gap-1">
             <template x-for="tag in tagsArray" :key="tag">
                 <button type="button" x-on:click="removeTag(tag)">
