@@ -25,6 +25,10 @@
                     categories: new Set(this.categoriesArray),
                     tagInput: tagsNames.join(' '),
                     categoryInput: categoriesNames.join(' '),
+                    tagsInit: @entangle('tagsInit'),
+                    categoriesInit: @entangle('categoriesInit'),
+                    filteredCategories: [],
+                    filteredTags: [],
                     addTag() {
                         // console.log(this.tagInput);
                         // get the tagInput array and insert the tag into the Set
@@ -52,6 +56,46 @@
                         this.categories = new Set(this.categoriesArray);
                         this.categories.delete(category);
                         this.categoriesArray = Array.from(this.categories);
+                    },
+                    filterCategories() {
+                        // if(this.categoryInput.length === 0) {
+                        //     this.filteredCategories = [];
+                        //     return;
+                        // }
+                        const searchValue = this.categoryInput.trim().split(' ').pop().toLowerCase();
+
+                        if (searchValue === '') {
+                            this.filteredCategories = [];
+                            return;
+                        }
+
+                        console.log(this.filteredCategories);
+
+                        this.filteredCategories = this.categoriesInit.filter(category => {
+                            return category.toLowerCase().includes(searchValue);
+                        });
+                    },
+                    selectCategory(category) {
+                        this.categoryInput = this.categoryInput.replace(/\S+$/, category + ' ');
+                        this.filteredCategories = [];
+                    },
+                    filterTags() {
+                        const searchValue = this.tagInput.trim().split(' ').pop().toLowerCase();
+
+                        if (searchValue === '') {
+                            this.filteredTags = [];
+                            return;
+                        }
+
+                        console.log(this.filteredTags);
+
+                        this.filteredTags = this.tagsInit.filter(tag => {
+                            return tag.toLowerCase().includes(searchValue);
+                        });
+                    },
+                    selectTag(tag) {
+                        this.tagInput = this.tagInput.replace(/\S+$/, tag + ' ');
+                        this.filteredTags = [];
                     },
                 }
             })
@@ -102,7 +146,19 @@
     <div class="w-[80%] flex flex-col">
         <x-input-wireui label='Tags' placeholder="input your tags"
             hint="Separate tags with spaces; you can click on a tag to remove it from the list"
-            x-on:keydown.enter="addTag" x-model="tagInput" />
+            x-on:keydown.enter="addTag" x-model="tagInput" x-on:input="filterTags" x-ref="tagInputRef"/>
+            <div class="relative z-10 bg-white" x-show="tagInput.length > 0 && filteredTags.length > 0" x-cloak
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <ul class="p-2">
+                <template x-for="tag in filteredTags" :key="tag">
+                    <li class="text-sm font-light text-gray-500" x-on:click="selectTag(tag)"
+                        x-on:click.away="$refs.tagInputRef.focus()" x-text="tag">
+                    </li>
+                </template>
+            </ul>
+        </div>
         <div class="flex flex-row gap-1">
             <template x-for="tag in tagsArray" :key="tag">
                 <button type="button" x-on:click="removeTag(tag)">
@@ -117,7 +173,21 @@
     <div class="w-[80%] flex flex-col">
         <x-input-wireui label='Categories' placeholder="input your categories"
             hint="Separate categories with spaces; you can click on a category to remove it from the list"
-            x-on:keydown.enter="addCategory" x-model="categoryInput" />
+            x-on:keydown.enter="addCategory" x-model="categoryInput"
+            x-on:input="filterCategories"
+            x-ref="categoryInputRef" />
+            <div class="relative z-10 bg-white" x-show="categoryInput.length > 0 && filteredCategories.length > 0" x-cloak
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <ul class="p-2">
+                <template x-for="category in filteredCategories" key="category">
+                    <li class="text-sm font-light text-gray-500" x-on:click="selectCategory(category)"
+                        x-on:click.away="$refs.categoryInputRef.focus()" x-text="category">
+                    </li>
+                </template>
+            </ul>
+        </div>
         <div class="flex flex-row gap-1">
             <template x-for="category in categoriesArray" :key="category">
                 <button type="button" x-on:click="removeCategory(category)">

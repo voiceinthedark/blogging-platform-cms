@@ -35,6 +35,10 @@ class EditPost extends Component
     public $tagsToCreate;
     public $categoriesToCreate;
     public $description;
+    public $tagsDB;
+    public $categoriesDB;
+    public $tagsInit;
+    public $categoriesInit;
 
     //? Use the same code for editing as well? Mounting the Post Component??
     protected $listeners = [
@@ -59,6 +63,10 @@ class EditPost extends Component
         $this->timeToRead = $this->post->minutes;
         $this->tagsToCreate = [];
         $this->categoriesToCreate = [];
+        $this->tagsDB = Tag::all();
+        $this->categoriesDB = Category::all();
+        $this->categoriesInit = $this->categoriesDB->pluck('slug')->toArray();
+        $this->tagsInit = $this->tagsDB->pluck('slug')->toArray();
 
         $this->updateEditorContent();
     }
