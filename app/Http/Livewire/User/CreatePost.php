@@ -9,6 +9,7 @@ use App\Notifications\PostCreated;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\Livewire;
 
 class CreatePost extends Component
 {
@@ -42,6 +43,8 @@ class CreatePost extends Component
     public $wordCount;
     public $timeToRead;
     public $description;
+    public $tagsInit;
+    public $categoriesInit;
 
     //? Use the same code for editing as well? Mounting the Post Component??
 
@@ -58,6 +61,8 @@ class CreatePost extends Component
         $this->wordCount = 0;
         $this->timeToRead = 0;
         $this->description = '';
+        $this->categoriesInit = $this->categoriesDB->pluck('slug')->toArray();
+        $this->tagsInit = $this->tagsDB->pluck('slug')->toArray();
     }
 
     public function updated($propertyName)
