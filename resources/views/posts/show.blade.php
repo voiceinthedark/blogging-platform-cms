@@ -1,6 +1,12 @@
 <x-guest-layout>
     @include('navigation-menu-guest')
 
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <!-- ToastUi Viewer -->
+    {{-- <script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script> --}}
+     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+
     <div class="flex flex-col items-center justify-center w-full">
         <div
             class="flex flex-col w-[80%] mx-auto justify-center items-center bg-white mt-4 px-5 py-4 shadow-lg shadow-gray-300">
@@ -46,15 +52,12 @@
             </div>
             <div class="flex flex-col pb-6 mt-9">
                 <article
-                    class="prose lg:prose-lg md:prose-sm indent-8 prose-headings:underline prose-a:text-blue-600 hover:prose-a:text-blue-400 first-letter:font-bold first-letter:float-left first-letter:mr-3 first-line:uppercase prose-ol:prose-li:my-0 prose-ul:prose-li:my-0">
-                    {!! Str::of($post->content)->markdown([
-                        'renderer' => [
-                            'block_separator' => "\n",
-                            'inner_separator' => "\n",
-                            'soft_break' => "\n",
-                        ],
+                    class="prose lg:prose-xl md:prose-lg indent-8 prose-headings:underline prose-a:text-blue-600 hover:prose-a:text-blue-400 first-letter:font-bold first-line:uppercase prose-ol:prose-li:my-0 prose-zinc prose-ul:prose-li:my-0">
+                    {!! Str::of($post->content)->markdown() !!}</article>
+                {{-- <div id="viewer">
+                    {!! Str::of($post->content)->markdown() !!}
 
-                    ]) !!}</article>
+                </div> --}}
             </div>
             <!-- Likes and Dislikes section -->
             <div class="self-end mt-8">
@@ -92,5 +95,48 @@
             <livewire:comments.show-comments :comments="$comments" :post="$post" />
         </div>
     </div>
+
+
+
+
+    <script type="module">
+
+        let content = '';
+
+        // Pusher.logToConsole = true;
+
+        // var pusher = new Pusher('7a6a88741d1cb64c3f64', {
+        // cluster: 'ap1'
+        // });
+
+        // var channel = pusher.subscribe('post.show');
+        // channel.bind('pusher:subscription_succeeded', function(members) {
+        //     // console.log(members);
+        //     });
+        // channel.bind("App\\Events\\SendPostContent", function(data) {
+        //     alert(JSON.stringify(data));
+        //     content = data;
+        //     viewer.setMarkdown(data);
+        // });
+
+        // console.log(content);
+        // const Viewer = toastui.Editor;
+
+        // const viewer = new Viewer({
+        //     el: document.querySelector('#viewer'),
+        //     height: '600px',
+        //     viewer: true,
+        //     initialValue: '# Hello',
+        // });
+
+        // viewer.setMarkdown(content);
+
+        // Echo.channel('post.show').listen("App\\Events\\SendPostContent", (e) => {
+        //     alert(JSON.stringify(e));
+        //     // viewer.setMarkDown(e.payload);
+        //     console.log(e.payload);
+        // });
+    </script>
+
 
 </x-guest-layout>

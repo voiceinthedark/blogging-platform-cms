@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
+
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
     <!-- FIX for hidden input -->
@@ -26,12 +28,12 @@
     @livewireStyles
 </head>
 
-<body class="bg-gray-100 h-screen">
-    <div class="font-sans text-gray-900 antialiased">
+<body class="h-screen bg-gray-100">
+    <div class="font-sans antialiased text-gray-900">
         {{ $slot }}
     </div>
 
-    <footer class="bg-white mt-16 dark:bg-gray-900" x-data>
+    <footer class="mt-16 bg-white dark:bg-gray-900" x-data>
         <div
             class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
             <a href="#">

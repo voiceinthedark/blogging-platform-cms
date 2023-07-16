@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendPostContent;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
@@ -46,10 +47,16 @@ class PostController extends Controller
     {
         // Str::of($post->content)->words(20);
         $post->increment('views');
+        // $this->sendPostContent($post->content);
         return view('posts.show', [
             'post' => $post,
             'comments' => Comment::rootComments()->where('post_id', $post->id)->get(),
         ]);
+    }
+
+    public function sendPostContent($payload){
+        // dd($payload);
+        event(new SendPostContent($payload));
     }
 
     /**
