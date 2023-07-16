@@ -3,8 +3,28 @@
 
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <!-- ToastUi Viewer -->
-    {{-- <script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script> --}}
-     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.js"></script>
+    <!-- Chart plugin -->
+    <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
+    <!-- Editor -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <!-- Editor's chart Plugin -->
+    <script src="https://uicdn.toast.com/editor-plugin-chart/latest/toastui-editor-plugin-chart.min.js"></script>
+    <!-- Editor's syntax highlight Plugin -->
+    <script
+        src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js">
+    </script>
+    <!-- Color Picker -->
+    <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
+    <!-- Editor's color Syntax Plugin -->
+    <script src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js">
+    </script>
+    <!-- Editor's table merged cell Plugin -->
+    <script
+        src="https://uicdn.toast.com/editor-plugin-table-merged-cell/latest/toastui-editor-plugin-table-merged-cell.min.js">
+    </script>
+    <!-- Editor's UML Plugin -->
+    <script src="https://uicdn.toast.com/editor-plugin-uml/latest/toastui-editor-plugin-uml.min.js"></script>
 
 
     <div class="flex flex-col items-center justify-center w-full">
@@ -51,13 +71,13 @@
                 </div>
             </div>
             <div class="flex flex-col pb-6 mt-9">
-                <article
+                {{-- <article
                     class="prose lg:prose-xl md:prose-lg indent-8 prose-headings:underline prose-a:text-blue-600 hover:prose-a:text-blue-400 first-letter:font-bold first-line:uppercase prose-ol:prose-li:my-0 prose-zinc prose-ul:prose-li:my-0">
-                    {!! Str::of($post->content)->markdown() !!}</article>
-                {{-- <div id="viewer">
-                    {!! Str::of($post->content)->markdown() !!}
+                    {!! Str::of($post->content)->markdown() !!}</article> --}}
+                <div id="viewer" class="w-[80%] text-justify mx-auto">
+                    {{-- {!! Str::of($post->content)->markdown() !!} --}}
 
-                </div> --}}
+                </div>
             </div>
             <!-- Likes and Dislikes section -->
             <div class="self-end mt-8">
@@ -99,9 +119,48 @@
 
 
 
-    <script type="module">
+    <script >
+        let content = {!! json_encode($post->content) !!};
+        // console.log(content);
+        const {
+        Editor
+        } = toastui;
 
-        let content = '';
+        const {
+        chart,
+        codeSyntaxHighlight,
+        colorSyntax,
+        tableMergedCell,
+        uml,
+
+        } = Editor.plugin;
+
+        const Viewer = toastui.Editor;
+
+        const viewer = Editor.factory({
+        el: document.querySelector('#viewer'),
+        height: '600px',
+        viewer: true,
+        // initialValue: content,
+        plugins: [
+        [chart],
+        [codeSyntaxHighlight, {
+        highlighter: Prism
+        }], colorSyntax, tableMergedCell, uml
+        ],
+
+        });
+
+        viewer.setMarkdown(content);
+
+        // Echo.channel('post.show').listen("App\\Events\\SendPostContent", (e) => {
+        // // alert(JSON.stringify(e));
+        // content=e;
+        // viewer.setMarkDown(content);
+        // });
+
+            // viewer.setMarkdown(content);
+
 
         // Pusher.logToConsole = true;
 
@@ -119,23 +178,9 @@
         //     viewer.setMarkdown(data);
         // });
 
-        // console.log(content);
-        // const Viewer = toastui.Editor;
 
-        // const viewer = new Viewer({
-        //     el: document.querySelector('#viewer'),
-        //     height: '600px',
-        //     viewer: true,
-        //     initialValue: '# Hello',
-        // });
 
-        // viewer.setMarkdown(content);
 
-        // Echo.channel('post.show').listen("App\\Events\\SendPostContent", (e) => {
-        //     alert(JSON.stringify(e));
-        //     // viewer.setMarkDown(e.payload);
-        //     console.log(e.payload);
-        // });
     </script>
 
 
