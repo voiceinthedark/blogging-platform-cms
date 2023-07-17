@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('recipient_id')->constrained('users');
             $table->string('subject');
             $table->text('content');
+            $table->boolean('is_read')->default(false); // When recipient reads the message
             $table->timestamps();
         });
     }

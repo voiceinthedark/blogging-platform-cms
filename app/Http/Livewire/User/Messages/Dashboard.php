@@ -59,6 +59,8 @@ class Dashboard extends Component
         ]);
 
         $this->reset(['message_recipient', 'message_subject', 'message_content']);
+        $this->outboxMessages = auth()->user()->sent_messages;
+        $this->inboxMessages = auth()->user()->received_messages;
     }
 
 
