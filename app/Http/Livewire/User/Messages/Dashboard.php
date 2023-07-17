@@ -15,7 +15,8 @@ class Dashboard extends Component
             'message_content' => 'required|string|min:5|max:255',
     ];
 
-    public $directMessages;
+    public $inboxMessages;
+    public $outboxMessages;
     public $message_sender;
     public $message_recipient;
     public $message_subject;
@@ -24,7 +25,8 @@ class Dashboard extends Component
     public $search;
 
     public function mount(){
-        $this->directMessages = auth()->user()->received_messages ;
+        $this->inboxMessages = auth()->user()->received_messages ;
+        $this->outboxMessages = auth()->user()->sent_messages;
         $this->users = User::all();
         $this->search = '';
     }
@@ -45,12 +47,13 @@ class Dashboard extends Component
             'message_content' => 'Content',
         ]);
 
-        dd($this->search, $this->message_recipient, $this->message_subject, $this->message_content);
-        $recipient = User::find($this->message_recipient);
+        // dd($this->search, $this->message_recipient, $this->message_subject, $this->message_content);
+        $recipient = User::firstWhere('email', $this->message_recipient);
+        // dd($recipient->id);
 
         Message::updateOrCreate([
             'sender_id' => auth()->user()->id,
-            'recipient_id' => $this->message_recipient,
+            'recipient_id' => $recipient->id,
             'subject' => $this->message_subject,
             'content' => $this->message_content
         ]);
