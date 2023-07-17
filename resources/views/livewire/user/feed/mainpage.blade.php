@@ -11,6 +11,9 @@
             @case('followers')
                 @livewire('user.feed.followers')
                 @break
+            @case('messages')
+                @livewire('user.messages.dashboard')
+            @break
 
             @default
 

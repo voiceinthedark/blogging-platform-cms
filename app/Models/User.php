@@ -128,4 +128,12 @@ class User extends Authenticatable
     public function following(): BelongsToMany{
         return $this->belongsToMany(User::class, 'user_followers', 'follower_id', 'followed_id');
     }
+
+    public function received_messages(): HasMany{
+        return $this->hasMany(Message::class, 'recipient_id', 'id');
+    }
+
+    public function sent_messages(): HasMany{
+        return $this->hasMany(Message::class, 'sender_id', 'id');
+    }
 }

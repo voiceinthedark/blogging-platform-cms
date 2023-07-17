@@ -1,11 +1,11 @@
 <div class="flex flex-col items-center justify-center w-full" x-data="dataHandler({{ $post->tags }}, {{ $post->categories }})" x-init=" /* Watch the tags array if it changes console it */
  $watch('tagsArray', () => {
-     console.log(tagsArray);
+    //  console.log(tagsArray);
      $wire.set('tags', tagsArray);
  });
  /* Watch the categories array if it changes console it */
  $watch('categoriesArray', () => {
-     console.log(categoriesArray);
+    //  console.log(categoriesArray);
      $wire.set('categories', categoriesArray);
  });" wire:ignore>
 

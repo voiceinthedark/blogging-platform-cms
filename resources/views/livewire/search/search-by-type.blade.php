@@ -9,7 +9,7 @@
         {{-- @dd($items) --}}
 
         @foreach ($items as $item)
-            <button type="button" wire:click.prevent="searchBy('{{ $item->slug }}', '{{ $type }}')">
+            <button type="button" wire:click.stop="searchBy('{{ $item->slug }}', '{{ $type }}')">
                 <x-badge rounded dark label="{{ $item->name }}" />
             </button>
         @endforeach
@@ -23,8 +23,9 @@
 
         @empty
         @endforelse
-        {{-- @if (!empty($results))
-            {{ $results->links() }}
+
+        {{-- @if($results->hasMorePages())
+            <button wire:click="loadMore" class="mt-4">Load More</button>
         @endif --}}
 
     @endisset($results)

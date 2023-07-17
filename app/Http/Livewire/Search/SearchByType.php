@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Search;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,18 +13,26 @@ class SearchByType extends Component
 {
     // use WithPagination;
 
-    protected $listeners = [
-        'searchResult' => '$refresh',
-        'search' => 'searchBy',
-    ];
+    // protected $listeners = [
+    //     'searchResult' => '$refresh',
+    //     'search' => 'searchBy',
+    // ];
+
+    public $perPage = 12;
 
     public $items;
     public $type;
     protected $searchResult;
 
+
     public function mount($items){
         $this->items = $items;
         $this->searchResult = [];
+    }
+
+    public function loadMore()
+    {
+        $this->perPage += 12;
     }
 
     /**

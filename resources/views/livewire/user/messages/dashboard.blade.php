@@ -1,0 +1,93 @@
+<div x-data="{
+    search: @entangle('search'),
+    showCreateModal: false,
+    users: {{ $users }},
+    users_emails: [],
+    filteredUsers: [],
+    selectedUser: {},
+    CreateModal(){
+        this.showCreateModal = !this.showCreateModal;
+        // console.log(this.users.map(user => user.email));
+    },
+    filterUsers(){
+        const searchValue = this.search.trim().toLowerCase();
+
+        if (searchValue === '') {
+            this.filteredUsers = [];
+            return;
+        }
+        this.filteredUsers = this.users.filter(user => {
+            return user.email.toLowerCase().includes(searchValue.toLowerCase());
+        });
+    },
+    selectUser(user){
+        this.selectedUser = user;
+        // console.log(this.selectedUser);
+        this.search = user.email;
+        console.log(this.search);
+        const msg_rec = document.querySelector('#message_recipient');
+        msg_rec.value = user.email;
+        console.log(msg_rec.value);
+        this.filteredUsers = [];
+        console.log(this.filteredUsers);
+        $refs.search.blur();
+    },
+}">
+
+    <x-button @click="CreateModal()">Compose new Message</x-button>
+
+    <div id="create-message-modal"
+        class="fixed top-0 bottom-0 left-0 right-0 z-10 p-2 mx-auto my-auto border border-blue-700 w-[500px] h-[500px] overflow-x-hidden overflow-y-auto bg-white"
+        x-cloak x-show="showCreateModal" :class="{'blur-sm': !showCreateModal}">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="col-span-1 sm:col-span-2">
+                <x-input-wireui id="message_recipient" label="Recipient" placeholder="Send a message to" x-model="search" wire:model="message_recipient" x-ref="search"
+                    @input="filterUsers" />
+                    <x-input-error for="message_recipient" class="mt-2" />
+
+                <div class="relative z-20 bg-gray-50" x-show="search.length > 0 && filteredUsers.length > 0" x-cloak>
+                    <div class="absolute top-0 z-30 flex items-center w-full pl-3 rounded-sm bg-gray-50">
+                        <div class="flex flex-col flex-shrink-0">
+                            <ul class="pl-2">
+
+                                <template x-if="filteredUsers != []">
+                                    <template  x-for="user in filteredUsers" :key="user.email">
+                                        <li class="cursor-pointer hover:bg-gray-100 text-slate-900" x-text="user.email" @click="selectUser(user)"></li>
+                                    </template>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <x-input-wireui id="message_subject" label="Subject" placeholder="Subject" wire:model.debounce.500ms="message_subject" />
+                <x-input-error for="message_subject" class="mt-2" />
+            </div>
+            <div class="w-full col-span-2 rounded-sm">
+                <x-textarea-wireui id="message_content" name="message" label="Message" placeholder="Message" wire:model.debounce.500ms="message_content" />
+                <x-input-error for="message_content" class="mt-2" />
+            </div>
+        </div>
+        <div id="footer">
+            <div class="flex justify-between gap-x-4">
+                <div class="flex gap-1">
+                    <x-button-wireui secondary label="Cancel" x-on:click="showCreateModal = false" />
+                    <x-button-wireui primary label="Send" wire:click="save" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        @forelse ($directMessages as $message)
+        <div class="flex flex-col">
+            <span>{{ $message->subject }}</span>
+            <div class="flex justify-between">
+                <span>From: {{ $message->sender->userprofile->username }}</span>
+                <span>{{ $message->created_at->diffForHumans() }}</span>
+            </div>
+        </div>
+        @empty
+        <span>No messages yet</span>
+        @endforelse
+    </div>
+</div>
