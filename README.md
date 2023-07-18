@@ -19,6 +19,8 @@ A Blogging Platform CMS using the Laravel TALL Stack.
 - Follower system, users can follow and unfollow other users.
 - User profile pages
 - Posts are indexed with Scout on Meilisearch, searching for posts is blazingly fast.
+- User Feed page with post recommender system
+- User direct messaging system
 
 
 ## Tech Stack
@@ -30,11 +32,29 @@ A Blogging Platform CMS using the Laravel TALL Stack.
 
 ## Screenshots
 
-![main page](2023-07-11-03-35-47.png)
-![dynamic search](2023-07-11-03-37-59.png)
-![user dashboard](2023-07-11-03-38-37.png)
-![Post Creation](2023-07-11-03-39-51.png)
-
+### Main Page
+![main page](2023-07-18-18-35-07.png)
+### Dynamic search
+![Dynamic search](2023-07-18-18-38-15.png)
+### User dashboard
+![user dashboard](2023-07-18-18-39-00.png)
+### Search by category
+![search by category](2023-07-18-18-39-48.png)
+### Post Creation
+![post creation](2023-07-18-18-46-25.png)
+#### dynamic lookup for tags and categories
+![](2023-07-18-18-48-08.png)
+![](2023-07-18-18-49-46.png)
+### page viewer
+![](2023-07-18-18-51-12.png)
+### comment and like system
+![](2023-07-18-18-52-35.png)
+### Follower system
+![](2023-07-18-18-53-30.png)
+### User profile
+![](2023-07-18-18-54-58.png)
+### Direct Message system
+![](2023-07-18-18-56-21.png)
 
 
 ## Run Locally
@@ -84,16 +104,17 @@ sail artisan migrate --seed
 ```
 
 ## Progress
-![Static Badge](https://img.shields.io/badge/Progress-77.5-%25?color=orange)
+![Static Badge](https://img.shields.io/badge/Progress-78-%25?color=orange)
 
 
 ## Roadmap
 
 - [x] Add Post notification
 - [x] Refactor and improve post creation/editing view
-- [ ] Add Feed page
-- [ ] Add DM system
-- [ ] Add recommender system
+- [x] Add Feed page
+- [x] Add DM system
+- [x] Add recommender system
+- [ ] Fix minor bugs
 
 
 ## Feedback
