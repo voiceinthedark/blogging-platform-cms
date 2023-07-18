@@ -27,12 +27,14 @@ class Dashboard extends Component
     public $users;
     public $search;
     public $message_reply;
+    public $message_is_read;
 
     public function mount(){
         $this->inboxMessages = auth()->user()->received_messages ;
         $this->outboxMessages = auth()->user()->sent_messages;
         $this->users = User::all();
         $this->search = '';
+        $this->message_is_read = 0;
     }
 
     public function updated($propertyName)
@@ -47,6 +49,7 @@ class Dashboard extends Component
     public function updateInboxMessages(){
         $this->inboxMessages = auth()->user()->received_messages;
         $this->outboxMessages = auth()->user()->sent_messages;
+        $this->message_is_read = 0;
     }
 
     public function save(){
@@ -65,11 +68,13 @@ class Dashboard extends Component
         // dd($recipient->id);
 
         Message::updateOrCreate([
+            'subject' => $this->message_subject,
             'sender_id' => auth()->user()->id,
             'recipient_id' => $recipient->id,
-            'subject' => $this->message_subject,
+            ],[
             'content' => $this->message_content,
-            'is_read' => 0,
+            'is_read' => !$this->message_is_read,
+            'updated_at' => now(),
         ]);
 
         $this->reset(['message_recipient', 'message_subject', 'message_content']);

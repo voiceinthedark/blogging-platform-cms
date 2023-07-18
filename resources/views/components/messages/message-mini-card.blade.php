@@ -4,7 +4,7 @@
         <span class="font-semibold">{{ $message->subject }}</span>
         <div class="flex justify-between gap-1">
             <span>to: {{ $message->recipient->userprofile->username }}</span>
-            <span>{{ $message->created_at->diffForHumans() }}</span>
+            <span>{{ $message->updated_at->diffForHumans() }}</span>
         </div>
     </div>
 
@@ -20,12 +20,13 @@
                     value="{{ $message->subject }}" disabled />
             </div>
             <div class="w-full col-span-2 rounded-sm">
-                <x-textarea-wireui id="message_content-{{ $message->id }}" name="message" label="Message" class="h-[260px]"
-                    disabled>{{ Str::of($message->content)->toHtmlString() }}</x-textarea-wireui>
+                <x-label for="message_content">Message</x-label>
+                <div id="message_content-{{ $message->id }}" name="message"  class="h-[250px] w-full bg-white rounded-lg border border-gray-400 p-2 font-extralight text-gray-600"
+                    disabled>{{ Str::of($message->content)->toHtmlString() }}</div>
             </div>
         </div>
         <div id="footer">
-            <div class="flex justify-between gap-x-4">
+            <div class="flex justify-between mt-2 gap-x-4">
                 <div class="flex gap-1">
                     <x-button-wireui secondary label="Cancel" x-on:click="showModal = false" />
                 </div>
