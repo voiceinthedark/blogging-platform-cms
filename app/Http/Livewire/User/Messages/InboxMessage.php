@@ -10,6 +10,7 @@ class InboxMessage extends Component
 
     protected $listeners = [
         'updatedMessageReply' => 'updatedMessageReply',
+        'messageRead' => 'messageRead',
     ];
 
     protected $rules = [
@@ -22,6 +23,7 @@ class InboxMessage extends Component
     public $message_subject;
     public $message_content;
     public $message_reply;
+    public $message_is_read;
 
     public function mount($message){
         $this->message = $message;
@@ -30,12 +32,22 @@ class InboxMessage extends Component
         $this->message_subject = $message->subject;
         $this->message_content = $message->content;
         $this->message_reply = '';
+        $this->message_is_read = $message->is_read;
     }
 
     public function updatedMessageReply($message){
         $this->message_reply = $message;
     }
 
+    public function messageRead(){
+        // dd($this->message_is_read);
+        $this->message_is_read = 1;
+        $this->message->update([
+            'is_read' => 1,
+        ]);
+        // dd($this->message);
+        // $this->message->save();
+    }
     public function reply(){
 
         $this->validate($this->rules);
@@ -51,6 +63,8 @@ class InboxMessage extends Component
             'subject' => $this->message_subject,
             'content' => Str::of($this->message_content)->toHtmlString(),
         ]);
+
+        $this->emitUp('replySent');
     }
     public function render()
     {

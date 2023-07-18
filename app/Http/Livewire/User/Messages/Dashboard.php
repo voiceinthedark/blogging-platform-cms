@@ -9,6 +9,9 @@ use Livewire\Component;
 class Dashboard extends Component
 {
 
+    protected $listeners = [
+        'replySent' => 'updateInboxMessages',
+    ];
     protected $rules = [
             'message_recipient' => 'bail|required|exists:users,email|email',
             'message_subject' => 'required|string|min:5|max:25',
@@ -41,6 +44,11 @@ class Dashboard extends Component
         $this->emitTo('messages.inbox-message', 'updatedMessageReply', $message);
     }
 
+    public function updateInboxMessages(){
+        $this->inboxMessages = auth()->user()->received_messages;
+        $this->outboxMessages = auth()->user()->sent_messages;
+    }
+
     public function save(){
         $this->validate($this->rules, [
             'message_recipient.required' => 'You must enter a recipient.',
@@ -60,12 +68,12 @@ class Dashboard extends Component
             'sender_id' => auth()->user()->id,
             'recipient_id' => $recipient->id,
             'subject' => $this->message_subject,
-            'content' => $this->message_content
+            'content' => $this->message_content,
+            'is_read' => 0,
         ]);
 
         $this->reset(['message_recipient', 'message_subject', 'message_content']);
-        $this->outboxMessages = auth()->user()->sent_messages;
-        $this->inboxMessages = auth()->user()->received_messages;
+        $this->updateInboxMessages();
     }
 
 

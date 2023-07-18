@@ -15,6 +15,7 @@ class Message extends Model
         'recipient_id',
         'subject',
         'content',
+        'is_read',
     ];
 
     public function sender(): BelongsTo {

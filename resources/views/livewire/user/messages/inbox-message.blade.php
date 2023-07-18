@@ -1,6 +1,16 @@
-<div>
-    <div class="flex flex-col w-full p-2 mt-1 bg-white border border-black rounded-lg cursor-pointer"
-        @click="showReceivedMessage = true">
+
+<div x-data="{
+    isRead: @entangle('message_is_read'),
+    showReceivedMessage: false,
+    showMessage(){
+        console.log(this.isRead);
+        this.isRead = true;
+        this.showReceivedMessage = !this.showReceivedMessage;
+        Livewire.emitTo('user.messages.inbox-message', 'messageRead');
+
+    } }">
+    <div class="flex flex-col w-full p-2 mt-1 bg-white border-2 border-green-600 rounded-lg cursor-pointer" :class="isRead ? 'isread' : ''"
+        @click="showMessage()">
         <span class="font-semibold">{{ $message->subject }}</span>
         <div class="flex justify-between">
             <span>From: {{ $message->sender->userprofile->username }}</span>
@@ -36,4 +46,10 @@
             </div>
         </div>
     </div>
+    <style>
+        .isread {
+            background-color: #e4e4e4;
+            border: 2px solid #000;
+        }
+    </style>
 </div>
