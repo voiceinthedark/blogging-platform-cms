@@ -23,6 +23,7 @@ class Dashboard extends Component
     public $message_content;
     public $users;
     public $search;
+    public $message_reply;
 
     public function mount(){
         $this->inboxMessages = auth()->user()->received_messages ;
@@ -34,6 +35,10 @@ class Dashboard extends Component
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+    }
+
+    public function updatedMessageReply($message){
+        $this->emitTo('messages.inbox-message', 'updatedMessageReply', $message);
     }
 
     public function save(){
