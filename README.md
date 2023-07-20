@@ -10,7 +10,6 @@ A Blogging Platform CMS using the Laravel TALL Stack.
 ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/voiceinthedark/blogging-platform-cms)
 
 
-
 ## Features
 
 - Complete CRUD system for Posts
@@ -116,6 +115,13 @@ sail artisan migrate --seed
 - [x] Add recommender system
 - [ ] Fix minor bugs
 
+## Coding time
+[![wakatime](https://wakatime.com/badge/user/9bdfcd03-4538-464c-86ab-3fb8cf66f7b6/project/7b155d60-fec9-4154-b381-29291af189aa.svg?style=for-the-badge)](https://wakatime.com/badge/user/9bdfcd03-4538-464c-86ab-3fb8cf66f7b6/project/7b155d60-fec9-4154-b381-29291af189aa)
+
+### time by components
+![](2023-07-19-08-34-14.png)
+
+
 
 ## Feedback
 
@@ -125,6 +131,9 @@ If you have any feedback, please reach out at darkrisingforce@gmail.com
 ## Acknowledgements
 
 - https://icons8.com/
+- https://flowbite.com/
+- https://ui.toast.com/
+- https://github.com/wireui/wireui
 
 # Hi, I'm Firas! 👋
 
